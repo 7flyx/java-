@@ -3,15 +3,15 @@ package demo1;
 public class demo2 {
     public static void main(String[] args) {
         //链表面试题2
-        /*
-            将单链表按照某值，小于的该值的放前面，等于的在中间，大于的在后面
-            解法一： 放到一个数组，做partition ，荷兰国旗问题 （笔试用）
-            解法二： 分为三个部分，每个部分创建头尾指针，遍历单链表，最后 小于区尾巴连 等于区头   ，等于区的尾巴 连 大于区的头
-         */
+    /*
+        将单链表按照某值，小于的该值的放前面，等于的在中间，大于的在后面
+        解法一： 放到一个数组，做partition ，荷兰国旗问题 （笔试用）
+        解法二： 分为三个部分，每个部分创建头尾指针，遍历单链表，最后 小于区尾巴连 等于区头   ，等于区的尾巴 连 大于区的头
+     */
 
         Node head = new Node();
         Node tail = head;
-        int[] arr = {10, 30, 50, 20, 90, 50, 70, 100};
+        int[] arr = {10, 30, 50, 20, 90, 50, 70, 50};
         for (int i = 0; i < arr.length; i++) {
             tail.val = arr[i];
             if (i != arr.length - 1) {
@@ -52,6 +52,8 @@ public class demo2 {
 
         //遍历单链表
         while (head != null) {
+            Node next = head.next;
+            head.next = null;
             if (head.val > k) { //大于区
                 if (bT == null) {
                     bH = head;
@@ -77,10 +79,7 @@ public class demo2 {
                     eT = eT.next;
                 }
             }
-
-            Node tmp = head.next;
-            head.next = null; //指针域该为空
-            head = tmp;
+            head = next;
         }
 
         //连接三个区域
@@ -88,10 +87,9 @@ public class demo2 {
             sT.next = eH;
             eT = eT==null? sT: eT; //如果为空，需要改变eT的指向
         }
-        if (bT != null) { //判断大于区
+        if (eT != null) { //判断大于区
             eT.next = bH;
         }
-
         return sH != null? sH: (eH != null? eH : bH);
     }
 }
