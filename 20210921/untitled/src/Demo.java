@@ -18,7 +18,7 @@ import java.util.*;
  */
 
 public class Demo {
-    private static ArrayList<Record> set = new ArrayList<>();
+    private final static ArrayList<Record> set = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
         ArrayList<Integer> list = new ArrayList<>(); //保存随机生成的5个数
@@ -27,6 +27,7 @@ public class Demo {
             if (num != 0 && !list.contains(num)) {
                 list.add(num);
             }
+
         }
 
         int[][] rect = printRect(list);
@@ -100,6 +101,7 @@ public class Demo {
         System.out.printf("- | %d | -\n", list.get(2));
         // System.out.print("_________\n");
         System.out.printf("%d | + | %d\n", list.get(3), list.get(4));
+
         return rect;
     }
 
@@ -112,6 +114,7 @@ public class Demo {
             throw new RuntimeException("rect is null.");
         }
 
+        //DFS深度优先遍历
         calcSum(rect, 0, 0, 0, 0, new int[7]); //左上角开始
         calcSum(rect, 0, 2, 0, 0, new int[7]); //右上角开始
         calcSum(rect, 2, 0, 0, 0, new int[7]); //左下角开始
@@ -169,6 +172,7 @@ public class Demo {
         if (rect[row][col] != '+' && rect[row][col] != '-') { //不是运算符
             count++;
         }
+
         calcSum(rect, row, col + 1, count, indexOfPath + 1, path); //向右
         calcSum(rect, row, col - 1, count, indexOfPath + 1, path); //向左
         calcSum(rect, row + 1, col, count, indexOfPath + 1, path); //向下
