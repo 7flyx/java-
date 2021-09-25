@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,6 +12,32 @@ import java.util.Scanner;
 public class Demo {
 
     public static void main(String[] args) {
+
+
+        try {
+            //假设此处会产生一个异常
+        } catch (IOException e) {
+
+        } catch (RuntimeException e) {
+
+        } catch (Exception e) {
+
+        }
+
+
+        try {
+            //假设此处会产生一个异常
+        } catch (Exception e) {
+
+        } catch (RuntimeException e) {
+
+        } catch (IOException e) {
+
+        }
+
+    }
+
+    public static void main4(String[] args) {
         String s1 = "welcome to bit";
         String s2 = "come";
         func(s1, s2);
