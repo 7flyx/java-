@@ -31,6 +31,9 @@ public class Demo {
 
         heap.push(10);
         System.out.println(Arrays.toString(heap.elem));
+        int val = heap.poll();
+        System.out.println(val);
+        System.out.println(Arrays.toString(heap.elem));
     }
 
 

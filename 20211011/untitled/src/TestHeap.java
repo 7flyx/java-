@@ -66,6 +66,17 @@ public class TestHeap {
         }
     }
 
+    public int poll() {
+        if (this.usedSize == 0) {
+            throw new RuntimeException("size is empty.");
+        }
 
+        int tmp = this.elem[0];
+        this.elem[0] = this.elem[--this.usedSize];
+        this.elem[this.usedSize] = tmp;
+
+        shiftDown(0); //向下调整
+        return tmp;
+    }
 }
 
