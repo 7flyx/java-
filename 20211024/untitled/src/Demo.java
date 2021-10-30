@@ -32,5 +32,18 @@ class Algorithm2 {
 
 
 public class Demo {
+    public static void main(String[] args) {
+        BinarySearchTree sbt = new BinarySearchTree();
+        sbt.insertTree(10);
+        sbt.insertTree(20);
+        sbt.insertTree(5);
+        sbt.insertTree(25);
+        sbt.insertTree(15);
+        sbt.insertTree(3);
+        sbt.print(sbt.root);
+        System.out.println();
+        sbt.remove(10);
+        sbt.print(sbt.root);
+    }
 
 }
