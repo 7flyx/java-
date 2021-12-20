@@ -1,6 +1,7 @@
 package com.cqsx.snake;
 
 import javax.swing.*;
+import java.awt.*;
 import java.net.URL;
 
 /**
@@ -22,6 +23,7 @@ public class GameData {
     private final static URL downURl = GameData.class.getResource("/lib/down.png");
     private final static URL leftURl = GameData.class.getResource("/lib/left.png");
     private final static URL rightURl = GameData.class.getResource("/lib/right.png");
+    private final static URL background1 = GameData.class.getResource("/lib/back1.png");
 
     public static ImageIcon body = new ImageIcon(bodyURl); //画出body
     public static ImageIcon food = new ImageIcon(foodURl); //画出食物
@@ -29,5 +31,7 @@ public class GameData {
     public static ImageIcon down = new ImageIcon(downURl); //画出向下的头部
     public static ImageIcon left = new ImageIcon(leftURl); //画出向左的头部
     public static ImageIcon right = new ImageIcon(rightURl); //画出向右的头部
+    public static ImageIcon background = new ImageIcon(background1);
+    //public static Image background =  //画出向右的头部
 
 }

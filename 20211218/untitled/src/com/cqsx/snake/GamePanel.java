@@ -15,23 +15,32 @@ import java.awt.event.KeyListener;
  * Description: 整个游戏的画板
  */
 public class GamePanel extends JPanel implements KeyListener, ActionListener {
+
     private int length; //蛇的长度
     private int score; //成绩
+
     //0下标位置是头部
     private final int[] snakeX; //存储蛇的横坐标
     private final int[] snakeY; //存储蛇的纵坐标
+
     private char direct; //方向，L左，R右，U上，D下
+
     private boolean isStart; //判断游戏是否已经开始，默认是false
     private final Timer timer; //计时器。根据一定的时间，刷新帧。也就是平时说的帧数。以这个来控制蛇的速度
+
     private int foodX; //食物的坐标
     private int foodY;
+
     private boolean isFail; //判断游戏是不是已经结束，默认是false
 
+    //构造方法
     public GamePanel() {
         snakeX = new int[600];
         snakeY = new int[600];
+
+        //this，super
         timer = new Timer(100, this);
-        init();
+        init(); //初始化界面
     }
 
     //初始化
@@ -40,11 +49,16 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
         score = 0;
         snakeX[0] = 100;
         snakeY[0] = 100;
+
         snakeX[1] = 75;
         snakeY[1] = 100;
+
         snakeX[2] = 50;
         snakeY[2] = 100;
+
         direct = 'R';
+
+
         getFood(); //获取新的食物
 
         //获取键盘的监听事件
@@ -60,8 +74,16 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); //清屏
         this.setBackground(Color.WHITE); //设置背景颜色
+
+
+        GameData.background.paintIcon(this, g, 25, 75); //画背景图片
+
         GameData.header.paintIcon(this, g, 25, 11); //将顶部的广告栏画出来
-        g.fillRect(25, 75, 850, 600); //整个蛇的活动区域
+
+
+       // g.fillRect(25, 75, 850, 600); //整个蛇的活动区域
+        GameData.food.paintIcon(this, g, foodX, foodY); //将食物画出来
+
 
         //将蛇头画出来
         if (direct == 'R') { //向右走的头部
@@ -73,11 +95,13 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
         } else if (direct == 'D') {//向下走的头部
             GameData.down.paintIcon(this, g, snakeX[0], snakeY[0]);
         }
+
+
+
         //将蛇的身体画出来
         for (int i = 1; i < length; i++) {
             GameData.body.paintIcon(this, g, snakeX[i], snakeY[i]);
         }
-        GameData.food.paintIcon(this, g, foodX, foodY); //将食物画出来
 
         //将成绩写到右上角
         g.setColor(Color.WHITE); //设置画笔颜色
@@ -86,7 +110,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
         g.drawString("成绩: " + score, 750, 57);
 
         //判断游戏是否已经开始
-        if (!isStart) {
+        if (isStart == false) {
             g.setColor(Color.WHITE); //设置画笔颜色
             g.setFont(new Font("微软雅黑", Font.BOLD, 40)); //设置字体格式
             g.drawString("按下空格开始游戏", 300, 350);
@@ -120,7 +144,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
         } else if (keyCode == KeyEvent.VK_RIGHT && this.direct != 'L') { //右
             this.direct = 'R';
         }
-        repaint(); //刷新界面
+        repaint(); //刷新界面。此处不调研也行，因为Timer会自动调用相应方法
     }
 
     //定时器，监听时间，也就是 帧：执行相应的操作
@@ -173,6 +197,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
             }
             repaint(); //重新刷新界面
         }
+
         timer.start(); //让计时器动起来
     }
 
