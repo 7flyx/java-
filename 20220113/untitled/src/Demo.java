@@ -10,28 +10,37 @@ import java.util.Scanner;
 public class Demo {
 
     public static void main(String[] args) {
-        //int N = new Scanner(System.in).nextInt();
-        System.out.println(f2(10));
+        int N = new Scanner(System.in).nextInt();
+        System.out.println(f2(N));
     }
-
     public static int f2(int N) {
         if (N <= 1) {
             return 1;
         }
-        int res = 1;
-        for (int i = 0; i < N; i++) {
+        int res = 0;
+        int L = 0; //第一层
+        int R = N - 1; //最后一层
+        int mid = 0;
+        while (L <= R && res == 0) { //res=0，说明还没有计算出来结果
+            mid = (L + R) / 2; //取中间值
             int num = 1;
-            int len = (i & 1) == 0? i / 2 : i / 2 + 1;
+            int len = (mid & 1) == 0? mid / 2 : mid / 2 + 1;
             for (int j = 0; j <= len; j++) {
-                num = num * (i - j) / (j + 1);
+                num = num * (mid - j) / (j + 1);
                 if (num == N) {
-                    res += j + 1;
-                    return res;
+                    res = j + 1;
+                    break;
                 }
             }
-            res += i + 1;
+            if (num < N) {
+                L = mid + 1;
+            } else {
+                R = mid - 1;
+            }
         }
-        return -1;
+        //计算前面的层数
+        res += (1 + mid) * mid / 2 ;//等差数列的求和
+        return res + 1;
     }
 
     public static int f(int N) {
