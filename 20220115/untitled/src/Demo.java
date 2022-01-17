@@ -106,7 +106,7 @@ public class Demo {
 
     }
 
-    public static void main(String[] args) {
+    public static void main5(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt(); //队伍的数量
         int[] arr = new int[n * 3];
@@ -115,6 +115,18 @@ public class Demo {
         }
         Arrays.sort(arr);
         dfs(arr, new int[3], 0, 0);
+
+
+    }
+
+    public static float f() {
+        long i = 100L;
+        return i;
+    }
+
+    public static float f2() {
+        long i = 100;
+        return i;
     }
 
     public static int dfs(int[] arr, int[] tmp, int index, int len) {
@@ -132,31 +144,81 @@ public class Demo {
     }
 
 
+    public static void main4(String[] args) {
+        Scanner input = new Scanner(System.in);
+        int a[] = new int[300000];
+        while (input.hasNext()) {
+            int n = input.nextInt();
+            for (int i = 0; i < n * 3; i++) {
+                a[i] = input.nextInt();
+            }
 
 
+            Arrays.sort(a, 0, 3 * n);
+            int end = 3 * n - 1;
+            int begin = 0;
+            long sum = 0;
+            while (end > begin) {
+                sum = sum + a[end - 1];
+                end = end - 2;
+                begin = begin + 1;
+            }
+            System.out.println(sum);
+        }
+    }
 
-        public static void main4(String[] args) {
-            Scanner input = new Scanner(System.in);
-            int a[] = new int[300000];
-            while (input.hasNext()) {
-                int n = input.nextInt();
-                for (int i = 0; i < n * 3; i++) {
-                    a[i] = input.nextInt();
+
+    public static void main6(String[] args) {
+        System.out.println(is("Admin"));
+
+    }
+
+    public static boolean is(String str) {
+        return str.toLowerCase() == "admin";
+    }
+
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int[] data = new int[n];
+        for (int i = 0; i < n; i++) {
+            data[i] = scanner.nextInt();
+        }
+
+        int flag = 0;
+        int result = 1;
+        for (int i = 1; i < n; i++) {
+            if (data[i] > data[i - 1]) {
+                if (flag == 0) {
+                    flag = 1;
                 }
-
-
-                Arrays.sort(a, 0, 3 * n);
-                int end = 3 * n - 1;
-                int begin = 0;
-                long sum = 0;
-                while (end > begin) {
-                    sum = sum + a[end - 1];
-                    end = end - 2;
-                    begin = begin + 1;
+                if (flag == -1) {
+                    flag = 0;
+                    result++;
                 }
-                System.out.println(sum);
+            } else if (data[i] < data[i - 1]) {
+                if (flag == 0) {
+                    flag = -1;
+                }
+                if (flag == 1) {
+                    flag = 0;
+                    result++;
+                }
             }
         }
+
+
+        System.out.println(result);
+
+        scanner.close();
+
+    }
+
+
+}
+
 
 
 }
