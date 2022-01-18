@@ -1,3 +1,5 @@
+import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
+
 import java.util.Scanner;
 
 /**
@@ -10,7 +12,12 @@ import java.util.Scanner;
 
 import java.util.*;
 
-public class Demo {
+
+class Person {
+    private String name = "hello";
+}
+
+public class Demo extends Person {
     public static boolean heapInsert(int[] arr, int i) {
         while (i != 0) {
             int parent = (i - 1) / 2;
@@ -177,8 +184,7 @@ public class Demo {
         return str.toLowerCase() == "admin";
     }
 
-
-    public static void main(String[] args) {
+    public static void main7(String[] args) {
         // TODO Auto-generated method stub
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
@@ -211,15 +217,21 @@ public class Demo {
 
 
         System.out.println(result);
-
+        System.out.println();
         scanner.close();
+
+    }
+
+
+
+    public static void main(String[] args) {
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((o1, o2)-> {
+            return (o2 - o1);
+        });
 
     }
 
 
 }
 
-
-
-}
 
