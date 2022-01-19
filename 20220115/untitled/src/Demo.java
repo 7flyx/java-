@@ -122,8 +122,6 @@ public class Demo extends Person {
         }
         Arrays.sort(arr);
         dfs(arr, new int[3], 0, 0);
-
-
     }
 
     public static float f() {
@@ -215,22 +213,11 @@ public class Demo extends Person {
             }
         }
 
-
         System.out.println(result);
         System.out.println();
         scanner.close();
 
     }
-
-
-
-    public static void main(String[] args) {
-        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((o1, o2)-> {
-            return (o2 - o1);
-        });
-
-    }
-
 
 }
 
