@@ -14,7 +14,8 @@ public class Demo1 {
         String str2 = "b";
 
 
-        System.out.println(calcPalidormNum(str1, str2));
+//        System.out.println(calcPalidormNum(str1, str2));
+        System.out.println(StrToInt("+2147483647"));
     }
 
     public static int calcPalidormNum(String str1, String str2) {
@@ -55,5 +56,29 @@ public class Demo1 {
         }
 
         return true;
+    }
+
+    public static int StrToInt(String str) {
+        if (str == null || str.length() == 0) {
+            return 0;
+        }
+
+        char[] ch = str.toCharArray();
+        char flag = '+';
+        int res = 0;
+        if (ch[0] == '-') {
+            flag = '-';
+        }
+        for (int i = (ch[0] == '+' || ch[0] == '-')? 1 : 0; i < ch.length; i++) {
+            if (ch[i] >= '0' && ch[i] <= '9') {
+                if (res > 0) {
+                    res = -res;
+                }
+                res = res * 10 - (ch[i] - '0');
+            } else {
+                return 0;
+            }
+        }
+        return flag == '-'?  res : -res;
     }
 }
