@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表格标签</title>
+</head>
+<body>
+    <style>
+      
+    </style>
+    <table  width = "300px" cellspacing="0" border="1px" >
+        <thead>核酸检测表</thead>
+        <tbody>
+            <!-- 这是第一行 -->
+            <tr>
+                <!-- th标签，首行标签，会加粗和居中字体 -->
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>职位</th>
+            </tr>
+            <tr>
+                <td>彭于晏</td>
+                <td>39</td>
+                <td>演员</td>
+            </tr>
+            <tr>
+                <td>胡歌</td>
+                <td>39</td>
+                <td>演员</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <img src="./image/wallhaven-r7krmq.jpg" alt="" width="150px">
+    <img src="./image/wallhaven-r7krmq.jpg" alt="" width="150px">
+
+    <!-- 列表标签 ol和ul的亲儿子只能是li标签，而li标签里面可以使用其他的标签-->
+    <ul>
+        <li>这是一个无序标签</li>
+        <li>这是一个无序标签</li>
+        <li>这是一个无序标签</li>
+    </ul>
+
+    <ol>
+        <li>这是一个有序标签</li>
+        <li>这是一个有序标签</li>
+        <li>这是一个有序标签</li>
+    </ol>
+   
+    <dl>
+        <dt>这是自定义标签的标题</dt>
+        <dd>这是自定义标签</dd>
+        <dd>这是自定义标签</dd>
+        <dd>这是自定义标签</dd>
+    </dl>
+
+    <h3>表单标签，让用户输入信心的重要途径</h3>
+    <input type="text" value="">
+    <input type="button" value="这是一个按钮" onclick="alert('hello')">
+    <input type="password"> 
+    <br>
+    <!-- 将name设置相同，这这个就只能选一个了 在单标签后面写显示的内容，比如男 女-->
+    <input type="radio" name="sex">男
+    <input type="radio" name="sex">女
+
+    <!-- 多选框 -->
+    <br>
+    <input type="checkbox" id="checkbox1"> 
+    <label for="checkbox1">吃饭</label>
+    <input type="checkbox" id="checkbox2"> 
+    <label for="checkbox2">睡觉</label>
+    <input type="checkbox" id="checkbox3"> 
+    <label for="checkbox3">打游戏</label>
+
+    <!-- 提交按钮 用于form标签中，用于跟后台的服务器进行交互使用 -->
+    <form action="https://www.baidu.com/">
+        <input type="text" name="username">
+        <input type="submit"> 
+    </form>
+
+    <!-- 清空标签 也是必须在form标签中使用，用于重置用户输入的数据-->
+    <form action="https://www.baidu.com/">
+        <input type="text" name="username">
+        <input type="password" name="password">
+        <input type="submit" name="submit">
+        <input type="reset" name="reset">
+    </form>
+    
+    <!-- 上传文件 -->
+    <br>
+    <input type="file">
+    
+
+    <!-- lable标签 提升用户体验，可以用在单选框 复选框那里，使其点击字体就能选中 -->
+    <br>
+    <input type="radio" name="sex" id="male"> 
+    <label for="male">男生</label>
+    <input type="radio" name="sex" id="female"> 
+    <label for="female">女生</label>
+
+    <h3>下拉标签</h3>
+    <select>
+        <option>打游戏</option>
+        <option>睡觉</option>
+        <!-- selected表示默认被选中的 -->
+        <option selected="selected">吃饭</option>
+    </select>
+
+    <textarea name="text1" id="" cols="30" rows="10">hello</textarea>
+    
+    <!-- 无语义标签 -->
+    <div>
+        <span>div标签，独占一行</span>
+    </div>
+    <span>span标签 不独占一行</span>
+
+    <p id="p1">这是一个段落</p>
+</body>
+</html>
