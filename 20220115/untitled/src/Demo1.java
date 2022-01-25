@@ -7,8 +7,28 @@ import java.util.Scanner;
  * Time: 20:08
  * Description:
  */
-public class Demo1 {
+
+class Deom {
+    public Deom(String s) {
+        System.out.println("B");
+    }
+
+    public Deom() {
+
+    }
+}
+
+public class Demo1 extends Deom{
+    public Demo1(String s) {
+        System.out.println("D");
+    }
+
     public static void main(String[] args) {
+        new Demo1("c");
+    }
+
+
+    public static void main1(String[] args) {
         Scanner sc = new Scanner(System.in);
         String str1 = "aba";
         String str2 = "b";
