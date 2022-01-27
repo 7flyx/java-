@@ -216,7 +216,10 @@ public class Demo extends Person {
         System.out.println(result);
         System.out.println();
         scanner.close();
+    }
 
+    public static void main(String[] args) {
+        Stack
     }
 
 }
