@@ -52,5 +52,140 @@
     <a href="https:www.baidu.com/">这是一个a标签</a>
 
 
+    <style>
+        .lHeight .one {
+            line-height: 40px; /* 行高*/
+            font-size: 16px; /* 字体大小*/
+        }
+
+        .lHeight2 div {
+            line-height: 100px;
+            height: 100px;
+        }
+    </style>
+    <div class="lHeight">
+        <div>
+            上一行
+        </div>
+        <div class="one">
+            中间行
+        </div>
+        <div>
+            下一行
+        </div>
+    </div>
+
+    <div class="lHeight2">
+        <div>
+            居中对齐
+        </div>
+    </div>
+
+
+    <style>
+        .bgi .one {
+            height: 300px;
+            background-image: url(/image/wallhaven-r7krmq.jpg);
+            background-repeat: no-repeat;
+        }
+        .bgi .two {
+            height: 300px;
+            background-image: url(/image/wallhaven-r7krmq.jpg);
+            background-repeat: repeat-x;
+        }
+        .bgi .three {
+            height: 300px;
+            background-image: url(/image/wallhaven-r7krmq.jpg);
+            background-repeat: repeat-y;
+        }
+    </style>
+    <div class="bgi">
+        <div class="one">
+            不平铺
+        </div>
+        <div class="two">
+            水平平铺
+        </div>
+        <div class="three">
+            垂直平铺
+        </div>
+    </div>
+
+
+    <style>
+        .bgp .one {
+            height: 500px;
+            background-image: url(/image/wallhaven-r7krmq.jpg);
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+
+    <div class="bgp">
+        <div class="one">背景居中</div>
+    </div>
+
+    <style>
+        .bgc .one {
+            height: 700px;
+            background-image: url(/image/C罗.png);
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            color: red;
+        }
+        .bgc .two {
+            height: 700px;
+            background-image: url(/image/C罗.png);
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            color:red;
+        }
+    </style>
+
+    <div class="bgc">
+        <div class="one">
+            contain
+        </div>
+        <div class="two">
+            cover
+        </div>
+    </div>
+
+    <style>
+        .around {
+            width: 200px;
+            height: 100px;
+            border: 2px solid green;
+            border-radius: 10px;
+        }
+    </style>
+
+    <div class="around">
+        这是一个圆角矩形
+    </div>
+
+    <style>
+        .justify { 
+            height: 300px;
+            display: flex;
+            background-color: red;
+        }
+        
+        .justify span {
+            background-color: blue;
+            width: 100px;
+            height: 100px;
+            justify-content: space-around;
+        }
+    </style>
+    <div class="justify">
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span>5</span>
+    </div>
 </body>
 </html>
