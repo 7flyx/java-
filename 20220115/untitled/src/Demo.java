@@ -218,8 +218,29 @@ public class Demo extends Person {
         scanner.close();
     }
 
-    public static void main(String[] args) {
-        Stack
+    public static void main8(String[] args) {
+        Integer num1 = new Integer(1);
+        Integer num2 = num1;
+        System.out.println(num1 == num2);
+        test(num2);
+        System.out.println(num1 == num2);
+
+    }
+
+    public static void test(Integer num) {
+        num = new Integer(2);
+
+    }
+
+    public static void main(String[] args){
+        Integer var1=new Integer(1);
+        Integer var2=var1;
+        doSomething(var2);
+        System.out.print(var1.intValue());
+        System.out.print(var1==var2);
+    }
+    public static void doSomething(Integer integer){
+        integer=new Integer(2);
     }
 
 }
