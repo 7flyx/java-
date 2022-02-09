@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <style>
+
+        html, body {
+            height: 100%;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .navigationbar {
+            background-color: red;
+            height: 30px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .navigationbar div{
+            color: white;
+        }
+
+        .leftbar {
+            background-color: green;
+            width: 100px;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .rightbar {
+            background-color: green;
+            width: 100px;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .midbar {
+            background-color: grey;
+            width: calc(100%  - 200px);
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .fontmid {
+            color: white;
+        }
+
+        .dbody {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+    <div class="navigationbar">
+        <div class="fontmid">
+            我是导航栏
+        </div>
+    </div>
+
+    <div class="dbody">
+        <div class="leftbar">
+            <div class="fontmid">
+                我是左边栏
+            </div>
+        </div>
+
+        <div class="midbar">
+            <div  class="fontmid">
+                中间栏
+            </div>
+        </div>
+
+        <div class="rightbar">
+            <div  class="fontmid">
+                我是右边栏
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
