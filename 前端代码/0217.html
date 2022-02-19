@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>待办事情</title>
+</head>
+<body>
+
+    <style>
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 100%;
+            display: flex;
+            justify-content: center; /*水平居中*/
+            margin-top: 40px; /*距离顶部有一定的距离*/
+        }
+
+        .container #newButton {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 700;
+            background-color: orange;
+            width: 100px;
+            height: 40px;
+            border-radius: 6px;
+            border: none;
+        }  
+
+        .container #newButton:active {
+            background-color: rgb(245, 225, 188);
+        }
+
+        .container .inputOne {
+            width: 400px;
+            height: 40px;
+            /* border: #000 solid 0.1px; */
+            border-radius: 4px;
+            font-size: 20px;
+            padding-left: 2px; /*光标一开始和左边框重合了，让他出来一点点*/
+            caret-color: #000; /* 光标颜色*/
+        }
+
+        .container2 {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .topBar {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            width: 250px;
+            height: 35px;
+            background-color: #000;
+            text-align: center;
+            padding: 4px;
+        }
+
+        .task {
+            width: 100%;
+            height: 25px;
+            display: flex;
+            justify-content: flex-start; /* 从左边开始排列*/
+            align-items: center;
+        }
+
+        .task span {
+            width: 200px;
+        }
+    </style>
+
+    <div class="container">
+        <!-- 新建任务区域 -->
+        <input type="text" class="inputOne">
+        <input type="button" id="newButton" value="新建任务">
+    </div>
+
+    <div class="container2">
+        <!-- 所有任务详情区域 -->
+        <div id="leftBar">
+            <div class="topBar">
+                未完成
+            </div>
+        </div>
+        <div id="rightBar">
+            <div class="topBar">
+                已完成
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let button = document.querySelector('#newButton');
+        let inputOne = document.querySelector('.inputOne');
+        let leftBar = document.querySelector('#leftBar');
+        let rightBar = document.querySelector('#rightBar');
+
+        button.onclick = function() {
+            let text = inputOne.value; //拿到输入的文本内容
+            console.log(text);
+            let row = document.createElement('div');
+            row.className = 'task';
+            let checkBox = document.createElement('input');
+            checkBox.type = 'checkbox';
+            let span = document.createElement('span');
+            span.innerHTML = text;
+            let delBtn = document.createElement('button');
+            delBtn.innerHTML = '删除';
+            row.appendChild(checkBox); //复选框
+            row.appendChild(span); //内容
+            row.appendChild(delBtn); //删除键
+            leftBar.appendChild(row); //挂在leftBar树上
+            //添加之后，输入框恢复
+            inputOne.value = '';
+
+            // 复选框效果，选中后放到右边，未选中放到左边
+            checkBox.onclick = function() {
+                let tmp = null; //目标
+                if (checkBox.checked) { //已经被选中
+                    tmp = rightBar;
+                } else { //未被选中
+                    tmp = leftBar;
+                }
+                tmp.appendChild(row); //重新选中DOM树
+            }
+
+            //删除相应的任务
+            delBtn.onclick = function() {
+                let parent = row.parentNode;
+                parent.removeChild(row);
+            }
+        };
+    </script>
+</body>
+</html>
