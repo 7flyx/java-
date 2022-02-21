@@ -1,0 +1,22 @@
+/* 博客详情页的css文件 */
+
+/* 标题 */
+.blog .title {
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.blog .date {
+    font-size: 14px;
+    color: rgb(97, 139, 34);
+    text-align: center;
+    margin: 20px 0;
+}
+
+.blog .mainBody {
+    text-indent: 2em;
+    /* 控制段落之间的距离 */
+    margin-bottom: 18px;
+}
