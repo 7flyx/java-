@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="MessageWall">
+    <output-path>$PROJECT_DIR$/out/artifacts/MessageWall</output-path>
+    <root id="root">
+      <element id="archive" name="MessageWall.jar">
+        <element id="module-output" name="MessageWall" />
+      </element>
+    </root>
+  </artifact>
+</component>
