@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * Created by Terry
  * User: Administrator
@@ -7,42 +9,32 @@
  */
 public class Demo {
     public static void main(String[] args) {
-        System.out.println(new B().getValue());
+        Scanner sc = new Scanner(System.in);
+        while (sc.hasNext()) {
+            int n = sc.nextInt();
+            System.out.println(getBiggestOne(n));
+        }
     }
 
-    static class A {
-        protected int value;
-
-        public A(int v) {
-            setValue(v);
+    public static int getBiggestOne(int n) {
+        if (n == -1) {
+            return 32;
         }
-
-        public void setValue(int value) {
-            this.value = value;
-        }
-
-        public int getValue() {
-            try {
-                value++;
-                return value;
-            } catch (Exception e) {
-                System.out.println(e.toString());
-            } finally {
-                this.setValue(value);
-                System.out.println(value);
+        int res = 0;
+        int tmp = n;//临时保存n，用于计算是否到头了
+        int index = 0; //左移位数
+        int num = 0; //临时存储一个结果
+        while (tmp != 0) {
+            if ((n & (1 << index)) != 0) { //当前位置是1的情况
+                num++;
+                tmp -= tmp & (-tmp); //减去最靠右的1
+            } else { //当前位置是0，结算前面的结果
+                res = Math.max(res, num);
+                num = 0;
             }
-            return value;
+            index++; //左移位数++
         }
-    }
-
-    static class B extends A {
-        public B() {
-            super(5);
-            setValue(getValue() - 3);
-        }
-
-        public void setValue(int value) {
-            super.setValue(2 * value);
-        }
+        res = Math.max(res, num);
+        return res;
     }
 }
