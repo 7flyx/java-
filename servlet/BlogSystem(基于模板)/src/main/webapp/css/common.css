@@ -84,6 +84,8 @@ html {
     border-radius: 5px;
     /* 上 右 下 左 */
     padding: 0 20px 0 20px;
+    /* 当文章内容溢出屏幕时，自动给当前标签添加 “滚动条” */
+    overflow: auto;
 }
 
 /* 个人信息的头像 */

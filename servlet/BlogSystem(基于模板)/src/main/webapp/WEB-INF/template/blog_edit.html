@@ -22,21 +22,26 @@
         <span>我的博客系统</span>
         <!-- 用于占位的，将两边的元素隔开 -->
         <span class="spancer"></span>
-        <a href="#">主页</a>
-        <a href="#">写博客</a>
-        <a href="#">注销</a>
+        <a href="blog_list.html">主页</a>
+        <a href="blog_edit.html">写博客</a>
+        <a href="sign_off">注销</a>
     </div>
 
     <div class="edit-container">
-        <!-- 标题编辑区 -->
-        <div class="edit-title">
-            <input type="text" id="title" placeholder="在这里输入标题">
-            <button id="submit">发布文章</button>
-        </div>
-        <!-- 内容编辑区 -->
-        <div id="editor">
-
-        </div>
+        <form action="blog_submit" method="post" style="height: 100%;">
+            <!-- 标题编辑区 -->
+            <div class="edit-title">
+                <input type="text" id="title" placeholder="在这里输入标题" name="title">
+                <!-- <button id="submit">发布文章</button> -->
+                <input type="submit" value="发布文章" id="submit">
+            </div>
+            <div th:if="${value} == 1" style="color: red;">博客标题或内容为空！</div>
+            <!-- 内容编辑区 -->
+            <div id="editor">
+                <!-- 新建一个隐藏的textarea标签（文本框） -->
+                <textarea name="content" style="display: none;"></textarea>
+            </div>
+        </form>
     </div>
 
     <script>
@@ -49,7 +54,9 @@
             // 编辑器中的初始内容
             markdown: "# 在这里写下一篇博客",
             // 指定 editor.md 依赖的插件路径
-            path: "editor.md/lib/"
+            path: "editor.md/lib/",
+            // 自动将编辑区的内容 填充到textarea标签中。（可查官方文档）
+            saveHTMLToTextArea: true
         });
     </script>
 </body>

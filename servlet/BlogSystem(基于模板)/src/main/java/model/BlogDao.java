@@ -96,6 +96,40 @@ public class BlogDao {
         return null; //中途出现异常的情况
     }
 
+    // 查询当前用户的全部文章
+    public List<Blog> selectAllOfUser(int userId) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<Blog> list = new ArrayList<>();
+        try {
+            connection = DBUtil.getConnection();
+            // 根据文章的发布时间，降序排序
+            String sql = "select * from blog where userId = ? order by postTime desc";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, userId);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) { //根据博客编码（主键）查询，只可能查询到一条记录，因为主键值是唯一的
+                Blog blog = new Blog();
+                blog.setBlogId(resultSet.getInt("blogId"));
+                String content = resultSet.getString("content");
+                if (content.length() > 200) { // 限制博客列表的所展示的文章长度
+                    content = content.substring(0, 200) + "...";
+                }
+                blog.setContent(content);
+                blog.setTitle(resultSet.getString("title"));
+                blog.setUserId(resultSet.getInt("userId"));
+                blog.setPostTime(resultSet.getTimestamp("postTime"));
+                list.add(blog);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            DBUtil.close(connection, statement, resultSet);
+        }
+        return list; //中途出现异常的情况
+    }
+
     public void deleteOne(int blogId) {
         Connection connection = null;
         PreparedStatement statement = null;

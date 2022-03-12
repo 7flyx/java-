@@ -15,26 +15,27 @@
         <span>我的博客系统</span>
         <!-- 用于占位的，将两边的元素隔开 -->
         <span class="spancer"></span>
-        <a href="#">主页</a>
-        <a href="#">写博客</a>
+        <!-- <a href="blog_list.html">主页</a>
+        <a href="#">写博客</a> -->
     </div>
 
     <!-- 登录框 -->
     <div class="outerLayout">
         <div class="login">
             <div class="title">登录</div>
-            
-            <div class="username">
-                <span>用户名</span>
-                <input type="text" id="username">
-                <!-- <img src="image/用户名.png" alt="用户" id="icon"> -->
-            </div>
-            <div class="password">
-                <span>密码</span>
-                <input type="password" id="password">
-                <!-- <img src="image/密码.png" alt="密码" id="icon"> -->
-            </div>
-            <button id="submit">登录</button>
+            <form action="login.html" method="post">
+                <div class="username">
+                    <span>用户名</span>
+                    <input type="text" id="username" name="username" autocomplete="off">
+                    <!-- <img src="image/用户名.png" alt="用户" id="icon"> -->
+                </div>
+                <div class="password">
+                    <span>密码</span>
+                    <input type="password" id="password" name="password">
+                    <!-- <img src="image/密码.png" alt="密码" id="icon"> -->
+                </div>
+                <input type="submit" id="submit" value="登录">
+            </form>
         </div>
     </div>
 </body>
