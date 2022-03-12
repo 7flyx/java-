@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表白墙</title>
+</head>
+<body>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 600px;
+            margin: 0 auto;
+
+        }
+
+        .container h1 {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .container p {
+            text-align: center;
+            color: grey;
+            font-size: 14px;
+            padding: 8px 0;
+        }
+
+        .container .row {
+            display: flex;
+            width: 600px;
+            justify-content: center;
+            padding: 2px 0;
+        }
+
+        .container span {
+            /* 弹性布局中，行内元素的大小可改动 */
+            width: 80px;
+            height: 20px;
+        }
+
+        .container .inputMessage {
+            width: 170px;
+            padding: "1px";
+        }
+
+        .container .submit {
+            width: 250px;
+            height: 30px;
+            color: #fff;
+            background-color: orange;
+            border: none;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+
+        /* 点击按钮的响应 */
+        .container .submit:active {
+            background-color: rgb(228, 206, 165);
+        }
+
+    </style>
+
+    <div class="container">
+        <h1>表白墙</h1>
+        <p>输入后点击提交，会将信息显示在表格中</p>
+        <form action="message" method="post">
+             <!-- 每个输入框，单独加div标签，表示一行 -->
+            <div class="row">
+                <span>谁： </span> <input type="text" class="inputMessage" name="from">
+            </div>
+            <div class="row">
+                <span>对谁：</span> <input type="text" class="inputMessage" name="to">
+            </div>
+            <div class="row">
+                <span>说：</span> <input type="text" class="inputMessage" name="message">
+            </div>
+            <div class="row">
+                <input type="submit" value="提交" class="submit">
+            </div>
+        </form>
+
+        <!--  结果-->
+        <div class="row" th:each="message : ${messages}">
+            <span th:text="${message.from}"></span>对
+            <span th:text="${message.to}"></span>说:
+            <span th:text="${message.message}"></span>
+        </div>
+    </div>
+    
+    <script>
+        // 通过模板引擎，将结果插入到html中
+        // let submitButton = document.querySelector('.submit');
+        // submitButton.onclick = function() {
+        //     // 首先拿到每个对象
+        //     let messages = document.querySelectorAll('.inputMessage');
+        //     let from = messages[0].value; //谁
+        //     let to = messages[1].value; //对谁
+        //     let message = messages[2].value;
+        //     if (from == '' || to == '' || message == '') {
+        //         return; //没说的情况，提前返回
+        //     }
+        //
+        //     // 2 构造HTML标签
+        //     let mydiv = document.createElement('div');
+        //     mydiv.className = 'row'; //class名
+        //     mydiv.innerHTML = from + '对' + to + '说：' + message;
+        //
+        //     //3 加入DOM树
+        //     let mycontainer = document.querySelector('.container');
+        //     mycontainer.appendChild(mydiv);
+        //     // 清空输入框
+        //     for (let i = 0; i < messages.length; i++) {
+        //         messages[i].value = '';
+        //     }
+        // }
+    </script>
+</body>
+</html>
