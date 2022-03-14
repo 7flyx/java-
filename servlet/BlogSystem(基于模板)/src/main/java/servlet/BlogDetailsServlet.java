@@ -27,6 +27,10 @@ public class BlogDetailsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=utf8");
         User user = Util.checkLogin(req); //从HttpSession对象中拿取user对象
+        if (user == null) {
+            resp.sendRedirect("blog_login.html");
+            return;
+        }
         // 先从请求中获取到blogID的值，然后从数据库中拿取相应的文章数据即可
         String blogId = req.getParameter("blogId");
         if (blogId == null || blogId.equals("")) {
@@ -47,6 +51,7 @@ public class BlogDetailsServlet extends HttpServlet {
         WebContext webContext = new WebContext(req, resp, getServletContext());
         webContext.setVariable("blog", blog);
         webContext.setVariable("user", user); //将个人信息也加载进去
+        webContext.setVariable("showDelBtnOfBlog", blog.getUserId() == user.getUserId());
         engine.process("blog_details", webContext, resp.getWriter());
     }
 }

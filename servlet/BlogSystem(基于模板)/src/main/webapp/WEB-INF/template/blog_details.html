@@ -7,6 +7,13 @@
     <title>博客详情页</title>
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/blog_details.css">
+        
+    <!-- 引入Markdown编辑的依赖 -->
+    <link rel="stylesheet" href="editor.md/css/editormd.min.css" />
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="editor.md/lib/marked.min.js"></script>
+    <script src="editor.md/lib/prettify.min.js"></script>
+    <script src="editor.md/editormd.js"></script>
 </head>
 <body>
      <!-- 导航栏 -->
@@ -17,9 +24,10 @@
         <span class="spancer"></span>
         <a href="blog_list.html">主页</a>
         <a href="blog_edit.html">写博客</a>
+        <a th:if="${showDelBtnOfBlog}" th:href="${'blog_delete?blogId=' + blog.blogId}">删除</a>
         <a href="sign_off">注销</a>
     </div>
-
+    
      <!-- 文章主体 -->
     <div class="articleBody">
         <!-- 左侧个人信息 -->
@@ -44,8 +52,21 @@
             <div class="blog">
                 <div class="title" th:text="${blog.title}"></div>
                 <div class="date" th:text="${blog.postTime}"></div>
-                <div class="mainBody" th:text="${blog.content}"></div>
+                <div class="mainBody" th:text="${blog.content}" id="content" style="background-color: transparent;">
+
+                </div>
             </div>
     </div>
+
+    <script>
+        // 首先拿到纯文本的content数据
+        let markdownText = document.querySelector("#content").innerHTML;
+        // 然后将原先的content数据清空
+        document.querySelector("#content").innerHTML = '';
+        // 通过Markdown的第三方库，将纯文本的Markdown文件，转换为HTML语法的文本
+        editormd.markdownToHTML('content', {markdown: markdownText}); // 第一个参数‘容器位置’，也就是上面div的id。第二个参数是Jjson格式
+
+    </script>
+
 </body>
 </html>
