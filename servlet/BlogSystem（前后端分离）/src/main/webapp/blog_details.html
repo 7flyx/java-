@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客详情页</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/blog_details.css">
+
+    <!-- 引入Markdown编辑的依赖 -->
+    <link rel="stylesheet" href="editor.md/css/editormd.min.css" />
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="editor.md/lib/marked.min.js"></script>
+    <script src="editor.md/lib/prettify.min.js"></script>
+    <script src="editor.md/editormd.js"></script>
+</head>
+<body>
+     <!-- 导航栏 -->
+    <div class="nav">
+        <img src="image/头像.jpg" alt="C罗">
+        <span>我的博客系统</span>
+        <!-- 用于占位的，将两边的元素隔开 -->
+        <span class="spancer"></span>
+        <a href="#">主页</a>
+        <a href="#">写博客</a>
+        <a href="#">注销</a>
+    </div>
+
+     <!-- 文章主体 -->
+    <div class="articleBody">
+        <!-- 左侧个人信息 -->
+        <div class="left">
+            <div class="card">
+                <img src="image/头像.jpg" alt="C罗">
+                <h3 class="textCenter">飞人</h3>
+                <a href="https://www.github.com" class="textCenter">github</a>
+                <div class="counter">
+                    <span>文章</span>
+                    <span>分类</span>
+                </div> 
+                <div class="counter">
+                    <span>2</span>
+                    <span>1</span>
+                </div>
+            </div>
+            
+        </div>
+        <!-- 右侧预览页 -->
+        <div class="right">
+            <div class="blog">
+                <div class="title"></div>
+                <div class="date"></div>
+                <div class="mainBody" id="content"></div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+
+    <script>
+        let blogPath = location.search; // 返回的整个queryString。比如 ?blogId=6
+        console.log(blogPath);
+        $.ajax({
+            "url": 'blog' + blogPath,
+            "method": 'get',
+            "success": function(data, status) {
+                buildBlog(data);
+            },
+            "error": function() {
+                // 重定向到登录页面
+                location.assign('blog_login.html');
+            }
+        });
+
+        function buildBlog(data) {
+            // 构建标题
+            let titleDiv = document.querySelector('.right .blog .title'); 
+            titleDiv.innerHTML = data.title;
+            
+            // 构建时间
+            let dateDiv = document.querySelector('.right .blog .date');
+            dateDiv.innerHTML = formatDate(data.postTime);
+
+            // 构建内容，需要用到Markdown语法，构建Markdown格式的html
+            // 第一个参数是存放位置的标签的id，第二个参数就是json格式
+            editormd.markdownToHTML('content', {markdown: data.content}); 
+        }
+
+        function formatDate(time) {
+            var date = new Date(time);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            var Y = date.getFullYear() + '-';
+            var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+            var D = date.getDate() + ' ';
+            var h = date.getHours() + ':';
+            var m = date.getMinutes() + ':';
+            var s = date.getSeconds();
+            return Y+M+D+h+m+s;
+        }
+    </script>
+</body>
+</html>

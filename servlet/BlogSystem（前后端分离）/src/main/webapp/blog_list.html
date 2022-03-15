@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客列表页</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/blog_list.css">
+</head>
+<body>
+    
+
+    <!-- 导航栏 -->
+    <div class="nav">
+        <img src="image/头像.jpg" alt="C罗">
+        <span>我的博客系统</span>
+        <!-- 用于占位的，将两边的元素隔开 -->
+        <span class="spancer"></span>
+        <a href="#">主页</a>
+        <a href="#">写博客</a>
+        <a href="#">注销</a>
+    </div>
+
+    <!-- 文章主体 -->
+    <div class="articleBody">
+        <!-- 左侧个人信息 -->
+        <div class="left">
+            <div class="card">
+                <img src="image/头像.jpg" alt="C罗">
+                <h3 class="textCenter">飞人</h3>
+                <a href="https://www.github.com" class="textCenter">github</a>
+                <div class="counter">
+                    <span>文章</span>
+                    <span>分类</span>
+                </div> 
+                <div class="counter">
+                    <span>2</span>
+                    <span>1</span>
+                </div>
+            </div>
+            
+        </div>
+        <!-- 右侧预览页 -->
+        <div class="right">
+            <!-- <div class="blog">
+                <div class="title">我的第一篇博客</div>
+                <div class="date">2022-02-19</div>
+                <div class="mainBody"></div> -->
+                <!-- 转义字符 >: &gt; ,  <: &lt; -->
+                <!-- <a href="#" class="details">查看全文 &gt; &gt;</a> </div> -->
+        </div>
+    </div>
+
+
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+
+    <script>
+        // 一般都是会将ajax搞一个事件，比如点击等操作，来触发。不加事件的话，就是在加载这个页面的时候触发
+        $.ajax({
+            "url": "blog",
+            "method": "get",
+            "success": function(data, status) {
+                // 后端返回的是json格式的数据
+                // 而到了这里，会被jQuery自动转换成一个 对象数组
+                buildDiv(data);
+            },
+            "error": function() {
+                // location.assign，表示分配一个新的URL
+                location.assign('blog_login.html');
+            }
+        });
+
+        function buildDiv(data) {
+            let container = document.querySelector(".right");
+            for (let blog of data) {
+                let blogDiv = document.createElement('div');
+                blogDiv.className = 'blog';
+                // 构建标题
+                let titleDiv = document.createElement('div');
+                titleDiv.className = 'title';
+                titleDiv.innerHTML = blog.title;
+                blogDiv.appendChild(titleDiv); //将标题div加入blogDiv
+                // 构建时间
+                let dateDiv = document.createElement('div');
+                dateDiv.className = 'date';
+                dateDiv.innerHTML = formatDate(blog.postTime);
+                blogDiv.appendChild(dateDiv);
+                // 构建文章内容
+                let contentDiv = document.createElement('div');
+                contentDiv.className = 'mainBody';
+                contentDiv.innerHTML = blog.content;
+                blogDiv.appendChild(contentDiv);
+                // 构建详情页的a标签
+                let detailA = document.createElement('a');
+                detailA.className = 'details';
+                detailA.href = 'blog_details.html?blogId=' + blog.blogId;
+                detailA.innerHTML = '查看全文 &gt; &gt;';
+                blogDiv.appendChild(detailA);
+                // 将这篇博客，挂在容器的DOM树上
+                container.appendChild(blogDiv);
+            }
+        }
+
+        function formatDate(time) {
+            var date = new Date(time);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            var Y = date.getFullYear() + '-';
+            var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+            var D = date.getDate() + ' ';
+            var h = date.getHours() + ':';
+            var m = date.getMinutes() + ':';
+            var s = date.getSeconds();
+            return Y+M+D+h+m+s;
+        }
+
+    </script>
+</body>
+</html>

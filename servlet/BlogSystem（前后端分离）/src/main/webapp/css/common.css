@@ -1,0 +1,121 @@
+/* 页面的大致框架和通用的界面 */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body,
+html {
+    width: 100%;
+    height: 100%;
+    background-image: url(../image/background.jpg);
+    background-size: cover; /*覆盖整个页面*/
+    background-position: center center;
+    background-repeat: no-repeat; /*不重复铺垫*/
+}
+
+/* 导航栏 */
+.nav {
+    width: 100%;
+    height: 50px;
+    color: #fff;
+    font-size: 16px; /*这里的字体大小和颜色，会影响到子元素的字体*/
+    background-color: rgba(50,50, 50, 0.5);
+    /* 让里面的元素，进行相对排列，用flex */
+    display: flex;
+    justify-content: flex-start; /*靠左排列*/
+    align-items: center;
+}
+
+/*导航栏的头像 */
+.nav img {
+    width: 40px;
+    height: 40px;
+    margin-left: 20px;
+    margin-right: 10px;
+    border-radius: 50%; /* 相对于宽度的一半*/
+}
+
+/* 我的博客系统，的span标签 */
+.nav span {
+    width: 100px;
+}
+
+/* 导航栏右边的链接 */
+.nav a {
+    color: #fff;
+    text-decoration: none; /*去掉下划线 */
+    width: 50px;
+    text-align: center;
+}
+
+/* 中间用来撑开两边的内容 */
+.nav .spancer {
+    width: calc(100% - 320px);
+}
+
+/* 文章主体部分 */
+.articleBody {
+    width: 1000px;
+    height: 100%;
+    margin: 0 auto;
+    /* 需要并列左右两个栏，需要flex */
+    display: flex;
+    justify-content: space-between;
+}
+
+/* 左侧个人信息栏 */
+.articleBody .left {
+    width: 200px;
+    height: calc(50% - 50px);
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 5px;
+    display: flex;
+    align-items:flex-start;
+    justify-content: center;
+}   
+
+/* 右侧文章预览页 */
+.articleBody .right {
+    width: 795px;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 5px;
+    /* 上 右 下 左 */
+    padding: 0 20px 0 20px;
+    overflow: auto; /*当内容过多时，会自动添加滚动条。前提是当前标签的高度已经设置的情况下*/
+}
+
+/* 个人信息的头像 */
+.articleBody .left img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    margin-top: 20px;
+}
+
+/* 网名 */
+.articleBody .left .textCenter {
+    text-align: center;
+}
+
+/* GitHub链接的a标签 */
+.card a {
+    /* a标签是行内元素，先换砖为块级元素 */
+    display: block;
+    color: grey;
+    text-decoration: none;
+    margin: 10px 0;
+}
+
+/* 文章 分类整体的div */
+.card .counter {
+    display: flex;
+    justify-content: space-around;
+}
+
+/* 文章 分类以及数字 */
+.card .counter span {
+    margin: 5px 0;
+}
