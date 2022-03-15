@@ -47,7 +47,7 @@ public class BlogDao {
         List<Blog> list = new ArrayList<>();
         try {
             connection = DBUtil.getConnection();
-            String sql = "select * from blog";
+            String sql = "select * from Blog";
             statement = connection.prepareStatement(sql);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -74,7 +74,7 @@ public class BlogDao {
         ResultSet resultSet = null;
         try {
             connection = DBUtil.getConnection();
-            String sql = "select * from blog where blogId = ?";
+            String sql = "select * from Blog where blogId = ?";
             statement = connection.prepareStatement(sql);
             statement.setInt(1, blogId);
             resultSet = statement.executeQuery();
@@ -105,7 +105,7 @@ public class BlogDao {
         try {
             connection = DBUtil.getConnection();
             // 根据文章的发布时间，降序排序
-            String sql = "select * from blog where userId = ? order by postTime desc";
+            String sql = "select * from Blog where userId = ? order by postTime desc";
             statement = connection.prepareStatement(sql);
             statement.setInt(1, userId);
             resultSet = statement.executeQuery();
@@ -135,7 +135,7 @@ public class BlogDao {
         PreparedStatement statement = null;
         try {
             connection = DBUtil.getConnection();
-            String sql = "delete from blog where blogId = ?";
+            String sql = "delete from Blog where blogId = ?";
             statement = connection.prepareStatement(sql);
             statement.setInt(1, blogId);
             int ret = statement.executeUpdate();

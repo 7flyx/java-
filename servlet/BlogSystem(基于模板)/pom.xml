@@ -40,4 +40,9 @@
         </dependency>
 
     </dependencies>
+
+    <packaging>war</packaging>
+    <build>
+        <finalName>BlogSystem</finalName>
+    </build>
 </project>

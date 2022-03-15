@@ -48,7 +48,7 @@ public class UserDao {
         ResultSet resultSet = null;
         try {
             connection = DBUtil.getConnection();
-            String sql = "select * from user where username = ?";
+            String sql = "select * from User where username = ?";
             statement = connection.prepareStatement(sql);
             statement.setString(1, name);
             resultSet = statement.executeQuery();

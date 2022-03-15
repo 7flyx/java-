@@ -1,0 +1,106 @@
+/* 博客登录页的css文件 */
+
+/* 为了让登录框居中，在登录框外层包一个div实现flex布局 */
+.outerLayout {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 登录框 */
+.login {
+    width: 380px;
+    height: 340px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 20px;
+}
+
+/* 登录，这个标题 */
+.login .title {
+    font-size: 23px;
+    font-weight: 700;
+    margin: 29px 0;
+    text-align: center;
+}
+
+/* 将username外层和password外层的div设置flex布局 */
+.login .username ,
+.login .password  {
+    display: flex;
+    justify-content: flex-start;
+}
+
+/* 两个输入框的间距 */
+.login .username,
+.login .password {
+    margin: 10px 0;
+}
+
+/* 调整span距离左边框的距离 */
+.login .username span,
+.login .password span {
+    display: block;
+    width: 48px;
+    height: 40px;
+    margin: 0 40px;
+    line-height: 40px;
+    font-weight: 700;
+}
+
+/* 输入框的大小 */
+#password,
+#username {
+    width: 205px;
+    height: 40px;
+    /* 去掉边框 */
+    border: none;
+    /* 去掉轮廓线，也就是选中的时候，那个黑边 */
+    outline: none;
+    border-radius: 5px;
+    padding-left: 5px;
+    font-size: 22px;
+}
+
+#username {
+        background: url(../image/用户名.png);
+        background-repeat: no-repeat;
+        background-size: 28px 28px;
+        background-position: 4px 6px;
+        padding-left: 36px;
+        background-color: #fff;
+}
+
+#password {
+        background: url(../image/密码.png);
+        background-repeat: no-repeat;
+        background-size: 26px 26px;
+        background-position: 4px 6px;
+        padding-left: 34px;
+        background-color: #fff;
+}
+
+/* 登录按钮 */
+#submit {
+    width: 295px;
+    height: 50px;
+    margin-left: 40px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 21px;
+    color: #fff;
+    background-color: green;
+}
+
+/* 登录按钮监听事件 */
+#submit:active {
+    background-color: rgb(91, 131, 91);
+}
+
+/* 用户名和面图标 */
+/* #icon {
+    width: 30px;
+    height: 30px;
+} */
