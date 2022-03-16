@@ -22,9 +22,9 @@
         <span>我的博客系统</span>
         <!-- 用于占位的，将两边的元素隔开 -->
         <span class="spancer"></span>
-        <a href="#">主页</a>
-        <a href="#">写博客</a>
-        <a href="#">注销</a>
+        <a href="blog_list.html">主页</a>
+        <a href="blog_edit.html">写博客</a>
+        <a href="logout">注销</a>
     </div>
 
      <!-- 文章主体 -->
@@ -33,7 +33,7 @@
         <div class="left">
             <div class="card">
                 <img src="image/头像.jpg" alt="C罗">
-                <h3 class="textCenter">飞人</h3>
+                <h3 class="textCenter"></h3>
                 <a href="https://www.github.com" class="textCenter">github</a>
                 <div class="counter">
                     <span>文章</span>
@@ -71,6 +71,22 @@
             "error": function() {
                 // 重定向到登录页面
                 location.assign('blog_login.html');
+            }
+        });
+
+        // 获取博客博主的信息
+        let blogId = location.search; //拿到当前请求中的queryString
+        console.log(blogId);
+        $.ajax({
+            "url": "getUser" + blogId,
+            "method": "get",
+            "success": function(data, status) {
+                let myName = document.querySelector('.left .card h3');
+                myName.innerHTML = data.username; // 设置用户名
+            },
+            "error": function() {
+                // 重定向到登录页码
+                location.assign("blog_login.html");
             }
         });
 
