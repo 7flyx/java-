@@ -40,13 +40,15 @@ public class GetUserServlet extends HttpServlet {
             resp.getWriter().write(userString);
             return;
         }
+
         // 获取博客博主的个人信息
         BlogDao blogDao = new BlogDao();
         Blog blog = blogDao.selectOne(Integer.parseInt(blogId));
         // 以json格式的数据写入
         UserDao userDao = new UserDao();
-        User curUser = userDao.getUserById(blog.getUserId()); // 博客文章中拿取用户ID
-        String userString = objectMapper.writeValueAsString(curUser);
+        User author = userDao.getUserById(blog.getUserId()); // 博客文章中拿取用户ID
+        author.setIsYourBlog(author.getUserId() == user.getUserId()? 1 : 0); //1表示当前博客是登录账户的
+        String userString = objectMapper.writeValueAsString(author);
         resp.getWriter().write(userString);
     }
 }

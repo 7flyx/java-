@@ -24,7 +24,7 @@
         <span class="spancer"></span>
         <a href="blog_list.html">主页</a>
         <a href="blog_edit.html">写博客</a>
-        <a href="logout">注销</a>
+        <a href="logout" id="last">注销</a>
     </div>
 
      <!-- 文章主体 -->
@@ -83,13 +83,27 @@
             "success": function(data, status) {
                 let myName = document.querySelector('.left .card h3');
                 myName.innerHTML = data.username; // 设置用户名
+                // 根据后端返回来的数据，数据李曼有一个IsYourBlog属性，表示当前博客是不是
+                // 当前登录账户的，如果是的，表示可以删除
+                let isYourBlog = data.isYourBlog;
+                if (isYourBlog) {
+                    //1 表示当前博客是登录账户的，则可以显示删除
+                    let newA = document.createElement('a');
+                    newA.innerHTML = '删除';
+                    // 链接还需要加上博客ID
+                    newA.href = 'blogDelete' + location.search; //后端删除操作servlet的URL
+                    let nav = document.querySelector('.nav');
+                    let lastDiv = document.querySelector('#last'); // 菜单栏最后一个div
+                    nav.insertBefore(newA, lastDiv); //将 新的a标签插到 最后一个div之前
+                }
             },
             "error": function() {
-                // 重定向到登录页码
+                // 重定向到登录页面
                 location.assign("blog_login.html");
             }
         });
 
+        // 构造Blog博客
         function buildBlog(data) {
             // 构建标题
             let titleDiv = document.querySelector('.right .blog .title'); 
@@ -104,6 +118,7 @@
             editormd.markdownToHTML('content', {markdown: data.content}); 
         }
 
+        // 根据时间戳进行格式化时间
         function formatDate(time) {
             var date = new Date(time);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
             var Y = date.getFullYear() + '-';

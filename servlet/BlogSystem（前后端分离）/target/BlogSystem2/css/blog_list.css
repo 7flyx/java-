@@ -1,0 +1,48 @@
+/* 这个文件表示博客列表页 右侧的样式 */
+
+/* 标题 */
+.blog .title {
+    color: black;
+    font-size: 20px;
+    /* 字体加粗 */
+    font-weight: 700;
+    text-align: center;
+    margin-top: 30px;  
+}
+
+.blog .date {
+    text-align: center;
+    color: rgb(121, 190, 16);
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.blog .mainBody {
+    /* 首行缩进 2个字符 */
+    text-indent: 2em;
+    font-size: 15px;
+    line-height: 21px;
+}
+
+.blog .details {
+    display: block;
+    width: 120px;
+    height: 38px;
+    border: 2px solid black;
+    margin-top: 15px;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    /* 垂直对齐，设置行高与高度相等即可 */
+    line-height: 35px;
+    border-radius: 3px;
+    margin: 0 auto;
+
+    /* 为按钮的背景设置一个过渡效果 */
+    transition: all 0.7s;
+}
+
+/* hover：鼠标悬停事件 */
+.blog .details:hover {
+    background-color: rgb(212, 228, 141);
+}

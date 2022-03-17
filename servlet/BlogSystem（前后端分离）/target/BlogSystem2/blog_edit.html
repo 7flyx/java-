@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客编辑页</title>
+    <link rel="stylesheet" href="css/blog_edit.css">
+    <link rel="stylesheet" href="css/common.css">
+
+    <!-- 引入Markdown编辑的依赖 -->
+    <link rel="stylesheet" href="editor.md/css/editormd.min.css" />
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="editor.md/lib/marked.min.js"></script>
+    <script src="editor.md/lib/prettify.min.js"></script>
+    <script src="editor.md/editormd.js"></script>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <div class="nav">
+        <img src="image/头像.jpg" alt="C罗">
+        <span>我的博客系统</span>
+        <!-- 用于占位的，将两边的元素隔开 -->
+        <span class="spancer"></span>
+        <a href="blog_list.html">主页</a>
+        <a href="blog_edit.html">写博客</a>
+        <a href="logout">注销</a>
+    </div>
+
+    <div class="edit-container">
+        <form action="blogSubmit" method="post" style="height: 100%;">
+            <!-- 标题编辑区 -->
+            <div class="edit-title">
+                <input type="text" id="title" placeholder="在这里输入标题" name="title">
+                <!-- <button id="submit">发布文章</button> -->
+                <input type="submit" value="发布文章" id="submit">
+            </div>
+            <!-- 内容编辑区 -->
+            <div id="editor">
+                // 设置一个隐藏的文本输入框，用户存储Markdown的数据
+                <textarea name="content" id="content" style="display: none;"></textarea>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // 初始化 editor.md
+        var editor = editormd("editor", {
+            // 这里的尺寸必须在这里设置. 设置样式会被 editormd 自动覆盖掉. 
+            width: "100%",
+            // 设定编辑器高度
+            height: "calc(100% - 70px)",
+            // 编辑器中的初始内容
+            markdown: "# 在这里写下一篇博客",
+            // 指定 editor.md 依赖的插件路径
+            path: "editor.md/lib/",
+            // editor提供的接口，将Markdown形式的数据存储为HTML
+            saveHTMLToTextArea: true
+        });
+    </script>
+</body>
+</html>

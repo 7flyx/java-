@@ -21,7 +21,7 @@ public class UserDao {
         ResultSet resultSet = null;
         try {
             connection = DBUtil.getConnection();
-            String sql = "select * from user where userId = ?";
+            String sql = "select * from User where userId = ?";
             statement = connection.prepareStatement(sql);
             statement.setInt(1, userId);
             resultSet = statement.executeQuery();

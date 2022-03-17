@@ -1,0 +1,55 @@
+/* 博客编辑页的css文件 */
+
+/* 编辑框的版心 */
+.edit-container {
+    width: 1000px;
+    height: calc(100% - 50px);
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+/* 标题编辑区 */
+.edit-title {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+/* 标题输入框 */
+#title {
+    width: 865px;
+    height: 100%;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    padding-left: 5px;
+    background-color: rgba(255, 255, 255, 0.7);
+    font-size: 20px;
+}
+
+/* 发布按钮 */
+#submit {
+    width: 130px;
+    height: 100%;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    background-color: orange;
+    font-size: 18px;
+}
+
+/* 发布按钮的监听时间 */
+#submit:active {
+    background-color: rgb(241, 198, 117);
+}
+
+#editor {
+    width: 100%;
+    border-radius: 10px;
+    /* 此时用rgba不能实现半透明，因为会被子元素的透明度覆盖掉 */
+    /* background-color: rgba(255, 255, 255, 0.7); */
+    /* 用opacity设置透明度 */
+    opacity: 0.7;
+}
