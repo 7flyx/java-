@@ -7,9 +7,9 @@ import java.util.Scanner;
  * User: Administrator
  * Date: 2022-03-17
  * Time: 21:02
- * Description:
+ * Description: 3月18号 第二个代码题
  */
-public class Code10_EditStringMininumDistance {
+public class Code10_EditStringMinimumDistance {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
