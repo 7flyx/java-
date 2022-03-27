@@ -6,6 +6,11 @@ package thread;
  * Date: 2022-03-26
  * Time: 16:45
  * Description: 线程中的一些基本使用
+ *
+ *           interrupt（），表示发起中断请求，会将标志位设为true
+ *           static boolean interrupted（），判断标志位是不是true，然后清除标志位，也就是改为false
+ *           isInterrupted()，判断标志位是不是true，不会清除标志位，也就是不会更改
+ *
  */
 public class Demo4 {
     public static void main(String[] args) {
