@@ -19,8 +19,14 @@ class Counter {
     // 加锁的情况。就不会出现在加载数据到寄存器时，产生“同时加载”的情况
     // 虽然此处加锁后，会影响到并发性，但也只会影响到当前方法的并发性，当前类的其他方法并不会影响
     // 所以会影响到一定的并发性，但是整体上来看，多线程技术还是有很大的优势
-    synchronized public void increase() {
-        count++;
+//    synchronized public void increase() {
+//        count++;
+//    }
+
+    public void increase() {
+        synchronized (this) {
+            count++;
+        }
     }
 }
 
