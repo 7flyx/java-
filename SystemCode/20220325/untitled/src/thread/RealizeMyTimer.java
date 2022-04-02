@@ -19,7 +19,7 @@ class MyTimer {
         Thread thread = new Thread() { // 单独创建一个线程，用于扫描小根堆的情况
             @Override
             public void run() { // 重写run方法
-                while (true) { // 死循环，一直检查小根堆的堆顶袁术是不是已经到点了
+                while (true) { // 死循环，一直检查小根堆的堆顶元素 是不是已经到点了
                     try {
                         Task task = queue.take(); // 不会拿到null值，因为这是“阻塞堆”，在没有数据的时候，会进行等待
                         long curTime = System.currentTimeMillis();
@@ -68,7 +68,7 @@ class MyTimer {
 
 
 
-public class Demo12 {
+public class RealizeMyTimer {
     public static void main(String[] args) {
         MyTimer timer = new MyTimer();
         timer.schedule(new Runnable() {
