@@ -109,7 +109,7 @@ public class Demo10 {
     }
 
     public static void main1(String[] args) throws InterruptedException {
-          queue = new MyBlockingQueue();
+        queue = new MyBlockingQueue();
         queue.put(1);
         queue.put(2);
         queue.put(3);
