@@ -1,5 +1,6 @@
 package net;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -27,5 +28,11 @@ public class UdpEchoServer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) throws IOException {
+        File file = new File("D:/test.txt");
+        file.createNewFile();
+        System.out.println(file.getName());
     }
 }
