@@ -41,14 +41,14 @@ public class UdpEchoServer {
             DatagramPacket responsePacket = new DatagramPacket(response.getBytes(StandardCharsets.UTF_8),
                     response.getBytes(StandardCharsets.UTF_8).length, requestPacket.getSocketAddress());
             socket.send(responsePacket);
-            // 打印日志
+            // 打印日志--这里输出端口号是客户端的端口号
             System.out.printf("[%s:%d] req: %s; resp: %s\n", requestPacket.getAddress().toString(),
                     requestPacket.getPort(), request, response);
         }
 
     }
 
-    private String getResponse(String request) {
+    public String getResponse(String request) {
         return  request;
     }
 
