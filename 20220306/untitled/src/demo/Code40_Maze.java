@@ -101,9 +101,9 @@ public class Code40_Maze {
     // dfs深度优先搜索
 
     class DFS {
-        static int[][] direction = {{0, -1}, {-1, 0}, {0, 1}, {1, 0}};
+        int[][] direction = {{0, -1}, {-1, 0}, {0, 1}, {1, 0}};
 
-        public static void dfs(int x, int y, char[][] maze, int[][] map) {
+        public void dfs(int x, int y, char[][] maze, int[][] map) {
             for (int i = 0; i < 4; i++) {
                 int xx = x + direction[i][0];
                 int yy = y + direction[i][1];
@@ -115,7 +115,7 @@ public class Code40_Maze {
             }
         }
 
-        public static void main(String[] args) {
+        public void main(String[] args) {
             Scanner sc = new Scanner(System.in);
             while (sc.hasNext()) {
                 char[][] maze = new char[10][10]; // 迷宫
