@@ -14,12 +14,14 @@
     </properties>
 
     <dependencies>
+        <!-- Spring-context 上下文对象 -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>5.2.3.RELEASE</version>
         </dependency>
 
+        <!-- Spring-beans  -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
