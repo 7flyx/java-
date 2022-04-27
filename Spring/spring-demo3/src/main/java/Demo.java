@@ -1,4 +1,5 @@
 import com.baidu.beans.*;
+import com.baidu.model.Users;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -37,5 +38,13 @@ public class Demo {
         // 调用UService--当类名的第一个字母大写时，此处的ID需要使用大驼峰形式
         UService uService = context.getBean("UService", UService.class);
         uService.sayHi();
+
+        // 调用方法注解的类--ID是
+        // 没有起别名时，默认就是方法名；起别名后，就必须使用别名才能调用
+        Users users = context.getBean("firstName", Users.class);
+        System.out.println(users);
+
+        UsersBean usersBean = context.getBean("usersBean", UsersBean.class);
+        System.out.println(usersBean);
     }
 }
