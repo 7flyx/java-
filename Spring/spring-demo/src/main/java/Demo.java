@@ -13,6 +13,13 @@ import org.springframework.core.io.ClassPathResource;
  * Description: resources下的spring-config.xml中的Beans可以注入多个重复的类。
  *              在beans里面，注入一次类，就相当于创建一次对象，后期在getBean时，只会拿到这个对象的引用。
  *              要想每次getBean时，拿到不同的对象，就需要改动配置，后期再说
+ *
+ *              ApplicationContext和BeanFactory的区别？
+ *              二者都是Spring中的顶级接口，ApplicationContext是BeanFactory的子类；
+ *              1、在new ApplicationContext()时，他会一次性加载并初始化所有的Bean，这样就造成了在加载并初始化时很慢（相对而言），
+ *                  而在调用bean对象时，就很快（相对而言）
+ *              2、在new BeanFactory时，并不会加载并初始化bean对象，他是在需要用到bean对象的时候，才会进行加载和初始化，这就造成
+ *                  在new BeanFactory时很快，而在getBean时，很慢。
  */
 public class Demo {
     public static void main(String[] args) {

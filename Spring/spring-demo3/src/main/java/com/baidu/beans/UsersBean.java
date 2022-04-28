@@ -24,4 +24,13 @@ public class UsersBean {
         users.setName("飞人");
         return users;
     }
+
+    @Bean(name = "myName")
+    public Users getUser2() {
+        Users users = new Users();
+        users.setAge(220);
+        users.setId(120);
+        users.setName("飞人2");
+        return users;
+    }
 }

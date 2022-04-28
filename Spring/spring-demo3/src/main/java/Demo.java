@@ -11,6 +11,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * Description: 测试类
  */
 public class Demo {
+
     public static void main(String[] args) {
         // 1 获取ApplicationContext 上下文对象
         ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
@@ -44,6 +45,7 @@ public class Demo {
         Users users = context.getBean("firstName", Users.class);
         System.out.println(users);
 
+        // 也会将Bean注解所在的类，也装入容器中
         UsersBean usersBean = context.getBean("usersBean", UsersBean.class);
         System.out.println(usersBean);
     }
