@@ -23,6 +23,5 @@ public class Demo2 {
 
         // 调用里面的方法
         artController.addArticle("hello", "world");
-
     }
 }
