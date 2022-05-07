@@ -54,12 +54,10 @@ public class Code37_LargestAscendingSubStr {
         int mid = 0;
         while (l <= r) {
             mid = (l + r) / 2;
-            if (len[mid] > num) {
+            if (len[mid] >= num) { // 中间值 比 目标值要大或等于，R往左
                 r = mid - 1;
-            } else if (len[mid] < num) {
+            } else { // 中间值 比 目标值要小，L往右
                 l = mid + 1;
-            } else {
-                return mid;
             }
         }
         return l;
