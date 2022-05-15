@@ -16,7 +16,7 @@ public class Task {
     // 这里需要用文件来保存信息，还有一个原因就是为了实现“进程间通信”
     // 实现进程间通信，在Linux系统中，有很多种方式，比如：管道、信号量、信号、文件、socket等
     private static final String WORK_DIR = "./tmp/"; // 工作目录
-    private static final String CLASS = "Solution"; // 类名
+    private static final String CLASS = "Test"; // 类名
     private static final String CODE = WORK_DIR + CLASS + ".java"; // .java文件名
     private static final String STDIN = WORK_DIR + "stdin.txt"; // 标准输入
     private static final String STDOUT = WORK_DIR + "stdout.txt"; // 标准输出
@@ -42,6 +42,8 @@ public class Task {
         CommandUtil.run(compileCmd, null, COMPILE_ERROR);
         String compileError = FileUtil.readFile(COMPILE_ERROR);
         if (!compileError.equals("")) { // 不等于空字符串，说明stderr文件有数据,也就是说编译出错了
+            // System.out.println("String：" + compileError);
+            System.out.println("编译错误");
             answer.setError(1); // 1表示编译出错
             answer.setReason(compileError); // 编译出错的原因
             return answer;
@@ -51,13 +53,19 @@ public class Task {
         CommandUtil.run(runCmd, STDOUT, STDERR);
         String stderrInfo = FileUtil.readFile(STDERR);
         if (!stderrInfo.equals("")) {
+            System.out.println("运行错误");
             answer.setError(2); // 2表示运行出错
             answer.setReason(stderrInfo);
             return answer;
         }
         // 4、整个上述全部信息，返回Answer
-        answer.setError(0);
-        answer.setStdout(FileUtil.readFile(STDOUT));
+        String s = FileUtil.readFile(STDOUT);
+        if (s.contains("success")) {
+            answer.setError(0);
+        } else {
+            answer.setError(2);
+        }
+        answer.setStdout(s);
         return answer;
     }
 

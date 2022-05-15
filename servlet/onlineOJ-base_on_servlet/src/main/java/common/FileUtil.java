@@ -13,9 +13,6 @@ import java.io.IOException;
  */
 public class FileUtil {
     public static String readFile(String filePath) {
-        if (filePath == null) {
-            return "";
-        }
         StringBuilder sb = new StringBuilder();
         // 通过字符流读取文件
         try (FileReader fileReader = new FileReader(filePath)) {
@@ -36,16 +33,18 @@ public class FileUtil {
         if (descFile ==  null || content == null) {
             return;
         }
+        System.out.println(descFile);
         try(FileWriter fileWriter = new FileWriter(descFile)) {
             fileWriter.write(content);
+            System.out.println("写入成功");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static void main(String[] args) {
-        FileUtil.writeFile("d:/test.txt", "hello world");
-        System.out.println(FileUtil.readFile("d:/test.txt"));
+        FileUtil.writeFile("./tmp/solution.java", "hello world");
+
 
     }
 }

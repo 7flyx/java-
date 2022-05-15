@@ -21,7 +21,6 @@ public class CommandUtil {
         try {
             // 1、获取子进程
             Process process = Runtime.getRuntime().exec(cmd);
-
             if (stdoutPath != null) {
                 // 2、标准输出流
                 stdoutFrom = process.getInputStream();
@@ -34,7 +33,6 @@ public class CommandUtil {
                     stdoutTo.write(ch);
                 }
             }
-
             if (stderrPath != null) {
                 // 3、标准错误流
                 stderrFrom = process.getErrorStream();
@@ -47,7 +45,6 @@ public class CommandUtil {
                     stderrTo.write(ch);
                 }
             }
-
             // 4、进程等待-等待子进行执行完成之后，才能执行后续的代码
             int exitCode = process.waitFor();
             return exitCode; // 将状态码返回去
