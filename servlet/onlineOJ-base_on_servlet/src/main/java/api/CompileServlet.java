@@ -1,7 +1,6 @@
 package api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import common.FileUtil;
 import compile.Answer;
 import compile.Question;
 import compile.Task;
@@ -42,29 +41,49 @@ public class CompileServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setStatus(200);
+        resp.setCharacterEncoding("utf8");
         resp.setContentType("application/json?charset=utf8");
+        CompileResponse compileResponse = new CompileResponse();
         // 1、解析请求中的body正文数据
         String body = readBody(req);
         CompileRequest compileRequest = objectMapper.readValue(body, CompileRequest.class);
         // 2、先从数据库读取当前题目的信息
         ProblemDAO problemDAO = new ProblemDAO();
         Problem problem = problemDAO.selectOne(compileRequest.id);
-        if (problem == null || compileRequest.code.length() == 0) { // 抹去前后空格后，是空字符串
-            resp.setStatus(404);
+        if (problem == null) {
+//            resp.setStatus(404);
+            compileResponse.error = 3; // 没有找到题目
+            compileResponse.reason = "没有找到该题目：id=" + compileRequest.id;
+            String response = objectMapper.writeValueAsString(compileResponse);
+            resp.getWriter().write(response);
             return;
         }
-        //FileUtil.writeFile("./tmp/Test.java", problem.getTestCase()); // 测试主方法
-        // 3、将用户提交的字符串类型的code，转换成.java文件
-        //FileUtil.writeFile("./tmp/Solution.java", compileRequest.code); // 用户提交的代码
-        String finalCode = problem.getTestCase() + compileRequest.code;
-        // System.out.println(finalCode);
+        int packageTail = compileRequest.code.indexOf("class Solution"); // 定位类名，类名以前的可能是导包的数据，分割出来
+        if (packageTail == -1) {
+            compileResponse.error = 3; // 没有找到题目
+            compileResponse.reason = "代码没有找到Solution类";
+            String response = objectMapper.writeValueAsString(compileResponse);
+            resp.getWriter().write(response);
+            return;
+        }
+        String packageData = compileRequest.code.substring(0, packageTail); // 左闭右开区间
+        String userCode = compileRequest.code.substring(packageTail);
+        packageTail = problem.getTestCase().indexOf("public");// 定位测试方法中导入的包
+        String packageData2 = "";
+        String testCode = problem.getTestCase();
+        if (packageTail != -1) {
+            packageData2 = problem.getTestCase().substring(0, packageTail);
+            testCode = problem.getTestCase().substring(packageTail);
+        }
+//        3、 拼接测试方法和用户提交的代码
+        String finalCode = packageData + packageData2 + userCode + testCode;
+        System.out.println(finalCode);
         // 4、跑测试方法。得到运行结果
         Question question = new Question();
         question.setCode(finalCode);
         Task task = new Task();
         Answer answer = task.compileAndRun(question);
         // 5、填写响应数据
-        CompileResponse compileResponse = new CompileResponse();
         compileResponse.error = answer.getError();
         compileResponse.reason = answer.getReason();
         compileResponse.stdout = answer.getStdout();

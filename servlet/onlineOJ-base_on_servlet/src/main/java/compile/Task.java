@@ -3,25 +3,36 @@ package compile;
 import common.FileUtil;
 
 import java.io.File;
+import java.util.UUID;
 
 /**
  * Created by Terry
  * User: Administrator
  * Date: 2022-05-14
-  * Time: 14:58
+ * Time: 14:58
  * Description: 一个用户提交的代码，这个事务
  */
 public class Task {
     // 通过一个常量，来存放编译运行时所涉及到一些目录
     // 这里需要用文件来保存信息，还有一个原因就是为了实现“进程间通信”
     // 实现进程间通信，在Linux系统中，有很多种方式，比如：管道、信号量、信号、文件、socket等
-    private static final String WORK_DIR = "./tmp/"; // 工作目录
-    private static final String CLASS = "Test"; // 类名
-    private static final String CODE = WORK_DIR + CLASS + ".java"; // .java文件名
-    private static final String STDIN = WORK_DIR + "stdin.txt"; // 标准输入
-    private static final String STDOUT = WORK_DIR + "stdout.txt"; // 标准输出
-    private static final String STDERR = WORK_DIR + "stderr.txt"; // 标准错误
-    private static final String COMPILE_ERROR = WORK_DIR + "compile_error.txt"; // 编译出错信息文件
+    private String WORK_DIR; // 工作目录
+    private String CLASS; // 类名
+    private String CODE; // .java文件名
+    private String STDIN; // 标准输入
+    private String STDOUT; // 标准输出
+    private String STDERR; // 标准错误
+    private String COMPILE_ERROR; // 编译出错信息文件
+
+    public Task() {
+        WORK_DIR = "./tmp/" + UUID.randomUUID().toString() + "/";
+        CLASS = "Test";
+        CODE = WORK_DIR + CLASS + ".java";
+        STDIN = WORK_DIR + "stdin.txt";
+        STDOUT = WORK_DIR + "stdout.txt";
+        STDERR = WORK_DIR + "stderr.txt";
+        COMPILE_ERROR = WORK_DIR + "compile_error.txt";
+    }
 
     // 完成遍历运行，并返回结果
     public Answer compileAndRun(Question question) {

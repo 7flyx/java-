@@ -1,0 +1,4 @@
+.\tmp\2d815226-0104-4080-8f8d-6b5b8ab219ac\Test.java:1: 错误: 类Solution是公共的, 应在名为 Solution.java 的文件中声明
+public class Solution {
+       ^
+1 个错误
