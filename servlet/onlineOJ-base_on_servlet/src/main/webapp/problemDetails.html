@@ -15,8 +15,12 @@
     <!-- 引入 ace.js -->
     <script src="https://cdn.bootcdn.net/ajax/libs/ace/1.2.9/ace.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/ace/1.2.9/ext-language_tools.js"></script>
-    
-    <title>侧边栏伸缩菜单</title>
+    <!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script> -->
+    <!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+    <title id="PageTitle"></title>
 </head>
 
 <body>
@@ -30,7 +34,7 @@
             </div>
             <!--头像-->
             <div class="icon">
-                <div class="icon-img"><img src="img/eric.png" alt="" /></div>
+                <div class="icon-img"><img src="images/eric.png" alt="" /></div>
                 <div class="icon-con">
                     <p>Good Day</p>
                     <h2>Vitaliy D.</h2>
@@ -99,25 +103,40 @@
         <div id="rightSpace">
             <div id="problemGather">
                 <div id="title">
-                    <h3>题目</h3>
+                    <!-- <h3>题目</h3> -->
                 </div>
                  <div class="body">
-                    <div>题干</div>
-               
+                    <!-- <div>题干</div> -->
                 </div> 
             </div>
             <div id="probelmEdit">
                 <div id="topbar">
-                 <span></span>
-                 <button>提交代码</button>
+                    <div id="codeSubmitedInfo">代码运行状况：
+                        <!-- <span class="notpassStatus">Error</span>  -->
+                        <!-- <input type="button" value="详情" id="detailsButton" onclick="dianwo()">  -->
+                    </div>
+                     
+                    <button id="submit">提交代码</button>
                 </div>
-                <div id="editor" style="min-height:643px; min-width: 200px;">
+                <div id="editor" style="min-height:631px; min-width: 200px; opacity: 0.7;">
                     <textarea class="form-control" id="codeEditor" style="width: 500px; height: 400px;"></textarea>
                 </div>
             </div>
+
+            <div class="codeResult" id='codeResult'>
+                <div class="tankuang">
+                    <div id="header" style="background-color: #536be3;">
+                        <div id="header-right" onclick="hidder()">X</div>
+                    </div>
+                    <div id="showResult">
+
+                    </div>
+                </div>
+		    </div>
         </div>
     </div>
 
+    <!-- Ace代码编辑器 -->
     <script>
         function initAce() {
             // 参数 editor 就对应到刚才在 html 里加的那个 div 的 id
@@ -146,9 +165,115 @@
         let editor = initAce(); // 初始化ACE代码编辑器
     </script>
 
+    <!-- 代码运行结果的弹窗 -->
+    <script type="text/javascript">
+        // 初始化时就是关闭弹窗的
+        document.getElementById('codeResult').style.display="none";
+
+        // 显示弹窗
+        function dianwo(){
+            document.getElementById('codeResult').style.display="";
+        }
+        // 关闭弹窗
+        function hidder(){
+            document.getElementById('codeResult').style.display="none";
+        }
+    </script>
     
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <!-- ajax -->
+    <script>
+        // 所需的全局变量
+        let myEditor = ace.edit("editor"); // 代码编辑器
+        // 初次加载当前界面时，需要拿到题目信息
+        console.log(location.search);
+        
+        $.ajax({
+            url: "problem" + location.search,
+            type: "GET",
+            success: function(data, status) {
+                // 题目标题
+                let pageTitle = document.querySelector("#PageTitle"); // 网页上的那个标题
+                pageTitle.innerHTML = data.title;
+                let titlePos = document.querySelector("#title"); 
+                let h3 = document.createElement("h3");
+                h3.innerHTML = data.title;
+                titlePos.appendChild(h3);
+                // 题目题干
+                let bodyPos = document.querySelector(".body");
+                let problem = document.createElement("div");
+                problem.innerHTML = data.description;
+                bodyPos.appendChild(problem);
+                // 题目初始化代码
+                myEditor.setValue(data.templateCode);
+
+                // 处理提交代码
+                let submitButton = document.querySelector("#submit");
+                submitButton.onclick = function() {
+                    let code = {
+                        id: data.id,
+                        code: myEditor.getValue()
+                    };
+
+                    $.ajax({
+                        url: "compile",
+                        type: "POST",
+                        contentType: "application/json;charset=utf8",
+                        data: JSON.stringify(code),
+                        success: function(data, status) {
+                            alert("代码提交成功！")
+                            let submitedInfo = document.querySelector("#codeSubmitedInfo");
+                            // 代码执行结果
+                            if (document.getElementById("resultSpan")) { // 如果存在的情况
+                                let span = document.querySelector("#resultSpan");
+                                if (data.error == 0) { // 代码运行成功的情况
+                                    span.className = "passStatus";
+                                    span.innerHTML = "Accept";
+                                } else { // 代码运行出错的情况
+                                    span.className = "notpassStatus";
+                                    span.innerHTML = "Error";
+                                }
+                            } else { // 如果不存在的情况
+                                let span = document.createElement("span");
+                                span.id = "resultSpan";
+                                if (data.error == 0) { // 代码运行成功的情况
+                                    span.className = "passStatus";
+                                    span.innerHTML = "Accept";
+                                } else { // 代码运行出错的情况
+                                    span.className = "notpassStatus";
+                                    span.innerHTML = "Error";
+                                }
+                                submitedInfo.appendChild(span);
+                            }
+                            
+                            // 代码运行详细信息
+                            if (!document.getElementById("detailsButton")) { // “详情”按钮不存在的情况
+                                let detailsButton = document.createElement("input");
+                                detailsButton.type = "button";
+                                detailsButton.onclick = dianwo;
+                                detailsButton.id = "detailsButton";
+                                detailsButton.value = "详情";
+                                submitedInfo.appendChild(detailsButton);
+                            }
+
+                            if (document.getElementById("details")) { // 如果已经存在代码运行数据，替换即可
+                                let pre = document.querySelector("#details");
+                                pre.innerHTML = '';
+                                pre.innerHTML = data.reason;
+                            } else { // 不存在代码运行信息，就新建
+                                let header = document.querySelector("#showResult");
+                                let div = document.createElement("div");
+                                let pre = document.createElement("pre");
+                                pre.innerHTML = '';
+                                pre.innerHTML = data.reason;
+                                pre.id = "details";
+                                div.appendChild(pre);
+                                header.appendChild(div);
+                            }
+                        }
+                    });
+                };
+            }
+        });
+    </script>
 </body>
 </html>

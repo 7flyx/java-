@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="font/iconfont.css" />
+    <link rel="stylesheet" href="font1/iconfont.css" />
+    <link rel="stylesheet" href="css/css.css" />
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/_custom.scss">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <title>题目合集</title>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="nav1">
+            <!--按钮-->
+            <div class="btn1">
+                <div class="btn-item"></div>
+                <div class="btn-item"></div>
+                <div class="btn-item"></div>
+            </div>
+            <!--头像-->
+            <div class="icon">
+                <div class="icon-img"><img src="images/eric.png" alt="" /></div>
+                <div class="icon-con">
+                    <p>Good Day</p>
+                    <h2>Vitaliy D.</h2>
+                </div>
+            </div>
+            <div class="line"></div>
+            <div class="title">
+                <p>Menu 6</p>
+            </div>
+            <div class="menu">
+                <div class="item">
+                    <div class="light"></div>
+                    <div class="licon"><span class="iconfont icon-qipao1"></span></div>
+                    <div class="con">首页</div>
+                    <div class="ricon"></div>
+                </div>
+                <div class="item">
+                    <div class="light"></div>
+                    <div class="licon"><span class="iconfont icon-wenjian"></span></div>
+                    <div class="con">题库</div>
+                    <div class="ricon"><span class="iconfont icon-shezhi"></span></div>
+                </div>
+                <div class="item">
+                    <div class="light"></div>
+                    <div class="licon">
+                        <span class="iconfont icon-shexiang"></span>
+                    </div>
+                    <div class="con">提交记录</div>
+                    <div class="ricon"></div>
+                </div>
+                <div class="item">
+                    <div class="light"></div>
+                    <div class="licon">
+                        <span class="iconfont icon-wenjian1"></span>
+                    </div>
+                    <div class="con">管理题目</div>
+                    <div class="ricon"></div>
+                </div>
+            </div>
+            <div class="line"></div>
+            <div class="title">
+                <p>Sever 6</p>
+            </div>
+            <div class="serve">
+                <div class="item">
+                    <div class="licon"><span class="iconfont icon-renqun"></span></div>
+                    <div class="con">Chat</div>
+                    <div class="ricon"></div>
+                </div>  
+                <div class="item">
+                    <div class="licon"><span class="iconfont icon-sousuo"></span></div>
+                    <div class="con">Intercom</div>
+                    <div class="ricon"><span class="iconfont icon-caidan1"></span></div>
+                </div>
+                <div class="item">
+                    <div class="licon">
+                        <span class="iconfont icon-gengduo-a"></span>
+                    </div>
+                    <div class="con">Setting</div>
+                    <div class="ricon"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧内容展示区域 -->
+        <div id="rightSpace">
+            <div id="problemGather">
+                <div id="title">
+                    <div id="leftBar">
+                        <h3>题目合集</h3>
+                    </div>
+                    <div id="rightBar">
+                        <input type="button" value="新增合集" id="addListBtn" onclick="dianwo()">
+                    </div>
+                </div>
+                 <div class="body">
+                    <table class="table table-striped" > 
+                        <tbody id="listBody">
+                            <tr>
+                                <!-- <td><button id="getProblemList1" onclick = "markProblemList('getProblemList1')">class02</button></td> -->
+                                <!-- <td>
+                                    <input type="button" value="2_多发发发" id="2_发发发" onclick="markProblemList()">
+                                </td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                   
+                    <!-- <div class="bottonPage"> 
+                        <div class="row mb-5" id="pagination">
+                            <div class="col-sm-12">
+                                <div class="row mt-4">
+                                    <div class="col-sm-6 pb-4">
+                                        <nav>
+                                            <ul class="pagination pagination-sm">
+                                                <li class="page-item">
+                                                    <a href="#" class="page-link" aria-label="Previous">
+                                                        <span aria-hidden="true">«</span>
+                                                    </a>
+                                                </li>
+                                                <li class="page-item active">
+                                                    <a href="#;" class="page-link">1</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a href="#" class="page-link" aria-label="Next">
+                                                        <span aria-hidden="true">»</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div> 
+
+            <div class="addList" id='addList'>
+                <div class="tankuang">
+                    <div id="header">
+                        <div id="header-right" onclick="hidder()">X</div>
+                    </div>
+                    <div id="addListWindow">
+                        <div>
+                            <input type="text" id="addListName">
+                        </div>
+                        <div>
+                            <input type="button" value="确认" id="addListSubmit">
+                        </div>
+                    </div>
+                </div>
+		    </div>
+            </div>
+            <div id="problemList">
+               <table class="table table-hover">
+                   <thead class="thead-dark">
+                       <tr>
+                           <th>状态</th>
+                           <th>题目</th>
+                           <th>难度</th>
+                       </tr>
+                   </thead>
+                   <tbody id="tableBody">
+                       <!-- <tr>
+                           <td><img src="images/未通过.png" alt="" class="notpass"></td>
+                           <td><a href="#">1. 两数之和</a></td>
+                           <td>简单</td>
+                       </tr> -->
+                       
+                   </tbody>
+               </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 添加新合集
+        let addListSubmit = document.querySelector("#addListSubmit");
+        addListSubmit.onclick = function() {
+            let addListName = document.querySelector("#addListName");
+            console.log(addListName.value);
+            $.ajax({
+                url: "addList?addListName=" + addListName.value,
+                type: "GET",
+                contentType: "text/html;charset=utf8",
+                success: function(data, status) {
+                    hidder();
+                    alert("新建合集成功。");
+                },
+                error: function(data, status) {
+                    hidder(); // 关闭那个输入窗口
+                    alert("合集已存在，无需新建。")
+                }
+            });
+        };
+    
+        // 加载合集和题目信息
+        $.ajax({
+            url: "getListName",
+            type:"GET",
+            success: function(data, status) {
+                markTopicSumList(data);
+            }
+        });
+
+
+        // 制作题目合集列表
+        function markTopicSumList(topicSumList) {
+            let listBody = document.querySelector("#listBody");
+            // 遍历这个数组（jQuery自动转成了数组的）
+            for (let a of topicSumList) {
+                let tr = document.createElement("tr");
+                let td = document.createElement("td");
+                let button = document.createElement("input");
+                button.value = a.number + "_" + a.list;
+                button.id = "problem" + a.number; // 形如： 1_problem，前者是这个集合的编号，唯一的
+                button.type = "button";
+                let str = "markProblemList('" + "problem" + a.number + "')";
+                console.log(str);
+                button.setAttribute("onclick", str); // 似乎直接设置onclick=？，这样不行
+                td.appendChild(button);
+                tr.appendChild(td);
+                listBody.appendChild(tr);
+            }
+        };
+
+        function markProblemList(listName) {
+            let getProblemBtn = document.querySelector("#" + listName);
+            getProblemBtn.onclick = function() {
+                let index = listName.indexOf('m');
+                console.log(index);
+                console.log(listName.substring(index + 1));
+                $.ajax({
+                    url: "problem?listID=" + listName.substring(index + 1), // 拼接上这个集合的编号
+                    type: "GET",
+                    success: function(data, status) {
+                        let tbody = document.querySelector("#tableBody");
+                        let count = 1;
+                        for (let problem of data) {
+                            let tr = document.createElement("tr");
+                            let tdState = document.createElement("td");
+                            let tdTitle = document.createElement("td");
+                            let tdLevel = document.createElement("td");
+                            // 图标
+                            let img = document.createElement("img");
+                            img.setAttribute("src", "images/未通过.png");
+                            img.className = "notpass";
+                            tdState.appendChild(img);
+                            // 标题+链接
+                            let a = document.createElement("a");
+                            a.href = "problemDetails.html?id=" + problem.id;
+                            a.innerHTML = count + ". " + problem.title;
+                            tdTitle.appendChild(a);
+                            // 难度
+                            tdLevel.innerHTML = problem.level;
+                            tr.appendChild(tdState);
+                            tr.appendChild(tdTitle);
+                            tr.appendChild(tdLevel);
+                            tbody.appendChild(tr);
+                        }
+                    }
+                });
+            };
+        }
+    </script>
+
+     <!-- 代码运行结果的弹窗 -->
+    <script type="text/javascript">
+        // 初始化时就是关闭弹窗的
+        document.getElementById('addList').style.display="none";
+
+        // 显示弹窗
+        function dianwo(){
+            document.getElementById('addList').style.display="";
+        }
+        // 关闭弹窗
+        function hidder(){
+            document.getElementById('addList').style.display="none";
+        }
+    </script>
+    
+    <!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> -->
+    
+</body>
+</html>

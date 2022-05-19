@@ -8,7 +8,7 @@
 .wrap {
     width: 100%;
     height: 100vh;
-    background: url(../img/5.jpg) center no-repeat;
+    background: url(../images/bg.jpg) center no-repeat;
     background-size: cover;
     display: flex;
     align-items: center;
@@ -248,7 +248,7 @@
 
 #problemGather #title {
     width: 100%;
-    height: 13%;
+    height: 65px;
     display: flex;
     background-color: rgba(208, 233, 246, 0.7);
     justify-content: center;  /* 水平居中*/
@@ -257,7 +257,7 @@
 }
 
 #problemGather .body {
-    height: 87%;
+    height: calc(100% - 65px);
     width: 100%;
     background-color: rgba(127, 156, 196, 0.8);
     border-radius: 8px; 
@@ -320,7 +320,11 @@ tbody a {
 #topbar {
     width: 100%;
     height: 65px;
-    background-color: rgba(208, 233, 246, 0.7);;
+    background-color: rgba(208, 233, 246, 0.8);
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 /* 提交按钮 */
@@ -329,4 +333,184 @@ tbody a {
     height: 30px;
     background-color: rgb(20, 146, 236);
     border: none;
+    outline: none;
+    border-radius: 5px;
+    margin-right: 50px;
+}
+
+#topbar div {
+    color: blue;
+    margin-left: 15px;
+    margin-bottom: 6px;
+}
+
+#topbar .passStatus {
+    color: #62cb44;
+    font-size: 24px;   
+    margin-left: 10px;
+    font-weight: 700;
+}
+
+
+#topbar .notpassStatus {
+    color: #f03207;
+    font-weight: 700;
+    font-size: 24px;   
+    margin-left: 10px;
+}
+
+#detailsButton {
+    color: #ffffff;
+    margin-left: 20px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+
+/* 代码运行结果的弹窗 */
+.codeResult{
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+/* 添加新合集结果的弹窗 */
+.addList{
+    position: fixed;
+    left: 20%;
+    top: 20%;
+    width: 50%;
+    height: 50%;
+}
+
+.tankuang{
+    position: relative;
+    background: #fff;
+    width: 50%;
+    height: 80%;
+    border-radius: 5px;
+    margin: 5% auto;
+}
+#header{
+    height: 40px;
+}
+#header-right{
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+    background: red;
+    color: #fff;
+    right: 5px;
+    top: 5px;
+    text-align: center;
+}
+
+
+/* 监听事件 */
+#topbar button:active {
+    background-color:rgb(106, 182, 237); ;
+}
+
+#detailsButton:active {
+    color: #79bfeb;
+}
+
+#header-right:active {
+    background-color: rgb(241, 100, 100);
+}
+
+#details {
+    color: #000;
+}
+
+
+#title #leftBar {
+    height: 100%;
+    width: 60%;
+    display: flex;
+    justify-content: end;
+}
+
+#title #rightBar {
+    height: 100%;
+    width: 40%;
+    display: flex;
+    justify-content: end;
+}
+
+#title h3 {
+    margin-top: 10px;
+}
+
+#addListBtn {
+    height: 30px;
+    width: 80px;
+    outline: none;
+    border: none;
+    background-color: orange;
+    color: #fff;
+    border-radius: 6px;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+#addListBtn:active {
+    background-color: rgb(247, 209, 139);
+}
+
+#addListWindow {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(137, 174, 211);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#addListName {
+    width: 200px;
+    height: 30px;
+    color: #000;
+    padding-left: 2px;
+    border: none;
+    outline: none;
+    margin-bottom: 10px;
+    border-radius: 2px;
+}
+
+#addListSubmit {
+    width: 50px;
+    height: 30px;
+    color: #000;
+    border: none;
+    outline: none;
+    margin-left: 10px;
+    border-radius: 3px;
+    background-color: #79bfeb;
+    margin-bottom: 10px;
+}
+
+#addListSubmit:active {
+    background-color:#a1cfec; 
+}
+
+#listBody button {
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: rgba(127, 156, 196, 0);
+}
+
+
+#listBody button:hover {    
+    color: rgb(233, 44, 37);
+}
+
+
+#listBody button:active {    
+    color: rgb(250, 108, 108);
 }
