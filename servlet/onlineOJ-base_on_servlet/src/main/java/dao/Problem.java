@@ -14,6 +14,15 @@ public class Problem {
     private String description;
     private String templateCode;
     private String testCase;
+    private int classify; // 类别
+
+    public int getClassify() {
+        return classify;
+    }
+
+    public void setClassify(int classify) {
+        this.classify = classify;
+    }
 
     public int getId() {
         return id;

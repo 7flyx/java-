@@ -17,33 +17,31 @@ import java.util.List;
  * Description: 对题目进行增删改查
  */
 public class ProblemDAO {
-    public void insert(Problem problem) {
+    public int insert(Problem problem) {
         if (problem == null) {
-            return;
+            return 0;
         }
 
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = DBUtil.getConnection();
-            String sql = "insert into oj_table values(null, ?, ?, ?, ?, ?)";
+            String sql = "insert into oj_table values(null, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(sql);
             statement.setString(1, problem.getTitle());
             statement.setString(2, problem.getLevel());
             statement.setString(3, problem.getDescription());
             statement.setString(4, problem.getTemplateCode());
             statement.setString(5, problem.getTestCase());
+            statement.setInt(6, problem.getClassify());
             int ret = statement.executeUpdate();
-            if (ret != 0) { // 影响到了数据库几行
-                System.out.println("题目添加成功");
-            } else {
-                System.out.println("题目添加失败");
-            }
+            return ret;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
             DBUtil.close(connection, statement, null);
         }
+        return 0; // 0就是表示影响到了数据库0行
     }
 
     public void delete(int problemID) {
@@ -128,6 +126,33 @@ public class ProblemDAO {
             DBUtil.close(connection, statement, resultSet);
         }
         return null;
+    }
+
+    // 查询一个集合内的所有题目
+    public List<Problem> selectOfGather(int listID) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<Problem> list = new ArrayList<>();
+        try {
+            connection = DBUtil.getConnection();
+            String sql = "select id, title, level from oj_table where classify = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, listID);
+            resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                Problem problem = new Problem();
+                problem.setId(resultSet.getInt("id"));
+                problem.setLevel(resultSet.getString("level"));
+                problem.setTitle(resultSet.getString("title"));
+                list.add(problem);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            DBUtil.close(connection, statement, resultSet);
+        }
+        return list;
     }
 
     public static void main(String[] args) {

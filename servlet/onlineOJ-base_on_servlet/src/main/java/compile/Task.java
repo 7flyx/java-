@@ -71,12 +71,12 @@ public class Task {
         }
         // 4、整个上述全部信息，返回Answer
         String s = FileUtil.readFile(STDOUT);
-        if (s.contains("success")) {
+        if (s.contains("测试通过")) {
             answer.setError(0);
         } else {
             answer.setError(2);
         }
-        answer.setStdout(s);
+        answer.setReason(s);
         return answer;
     }
 

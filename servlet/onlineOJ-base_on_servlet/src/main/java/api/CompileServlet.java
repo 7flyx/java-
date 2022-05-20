@@ -6,6 +6,7 @@ import compile.Question;
 import compile.Task;
 import dao.Problem;
 import dao.ProblemDAO;
+import dao.SaveCodeDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,6 +29,7 @@ public class CompileServlet extends HttpServlet {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     static class CompileRequest { // 前端传过来的数据
+        public int userID; // 用户ID
         public int id; // 题号
         public String code; // 代码
     }
@@ -51,7 +53,6 @@ public class CompileServlet extends HttpServlet {
         ProblemDAO problemDAO = new ProblemDAO();
         Problem problem = problemDAO.selectOne(compileRequest.id);
         if (problem == null) {
-//            resp.setStatus(404);
             compileResponse.error = 3; // 没有找到题目
             compileResponse.reason = "没有找到该题目：id=" + compileRequest.id;
             String response = objectMapper.writeValueAsString(compileResponse);
@@ -90,6 +91,9 @@ public class CompileServlet extends HttpServlet {
         System.out.println(compileResponse.reason + " " + compileResponse.stdout);
         String s = objectMapper.writeValueAsString(compileResponse);
         resp.getWriter().write(s);
+
+        //6. 假设代码运行成功，需要将用户代码保存到数据库
+        SaveCodeDAO.saveCodeToDB(compileRequest.id, compileRequest.code, compileRequest.userID);
     }
 
     private String readBody(HttpServletRequest req) throws UnsupportedEncodingException {

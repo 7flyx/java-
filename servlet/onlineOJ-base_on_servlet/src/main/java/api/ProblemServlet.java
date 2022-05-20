@@ -28,14 +28,16 @@ public class ProblemServlet extends HttpServlet {
         resp.setContentType("application/json;charset=utf8");
         ProblemDAO problemDAO = new ProblemDAO();
         String id = req.getParameter("id");
-        if (id == null || id.equals("")) {
-            List<Problem> list = problemDAO.selectAll();
-            String respString = objectMapper.writeValueAsString(list); // 将表中的数据，转换为json格式的数据
-            resp.getWriter().write(respString);
-        } else {
+        String listID = req.getParameter("listID"); // 具体的一个集合内里面的题目
+        if (id != null && !id.equals("")){
             Problem problem = problemDAO.selectOne(Integer.parseInt(id));
             String respString = objectMapper.writeValueAsString(problem);
             resp.getWriter().write(respString);
+        } else if (listID != null && !listID.equals("")) {
+            List<Problem> problems = problemDAO.selectOfGather(Integer.parseInt(listID));
+            String s = objectMapper.writeValueAsString(problems);
+            resp.getWriter().write(s);
         }
+        System.out.println(listID);
     }
 }
