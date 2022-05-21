@@ -1,5 +1,6 @@
 
 create database if not exists oj_system;
+
 use oj_system;
 
 -- 题目信息
@@ -16,7 +17,7 @@ create table `oj_table`(
 -- 题目分类
 create table `classify_table` (
     classify  int primary key auto_increment,        -- 类型编号
-    classify_name varchar(50) -- 类型名
+    classify_name varchar(50) unique -- 类型名
 );
 
 -- 存储曾经提交通过的代码

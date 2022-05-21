@@ -1,12 +1,14 @@
 package api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import common.Util;
 import compile.Answer;
 import compile.Question;
 import compile.Task;
 import dao.Problem;
 import dao.ProblemDAO;
 import dao.SaveCodeDAO;
+import dao.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -45,6 +47,11 @@ public class CompileServlet extends HttpServlet {
         resp.setStatus(200);
         resp.setCharacterEncoding("utf8");
         resp.setContentType("application/json?charset=utf8");
+        User user = Util.checkLogin(req);
+        if (user == null) {
+            resp.setStatus(304); // 重定向到登录页面
+            return;
+        }
         CompileResponse compileResponse = new CompileResponse();
         // 1、解析请求中的body正文数据
         String body = readBody(req);
@@ -93,7 +100,7 @@ public class CompileServlet extends HttpServlet {
         resp.getWriter().write(s);
 
         //6. 假设代码运行成功，需要将用户代码保存到数据库
-        SaveCodeDAO.saveCodeToDB(compileRequest.id, compileRequest.code, compileRequest.userID);
+        SaveCodeDAO.saveCodeToDB(compileRequest.id, compileRequest.code, user.getUserID());
     }
 
     private String readBody(HttpServletRequest req) throws UnsupportedEncodingException {

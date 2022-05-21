@@ -1,12 +1,15 @@
 package api;
 
+import common.Util;
 import dao.ListDAO;
+import dao.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -23,6 +26,11 @@ public class AddListServlet extends HttpServlet {
         req.setCharacterEncoding("utf8");
         resp.setContentType("text/html;charset=utf8");
         resp.setCharacterEncoding("utf8");
+        User user = Util.checkLogin(req);
+        if (user == null) {
+            resp.setStatus(304);
+            return;
+        }
         String listName = req.getParameter("addListName");
         boolean result = ListDAO.addList(listName);
         if (!result) { // 没有插入成功的情况，说明数据库已经有相同的合集名称了

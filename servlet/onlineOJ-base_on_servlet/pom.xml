@@ -37,7 +37,7 @@
 
     <packaging>war</packaging>
     <build>
-        <finalName>onlineOj</finalName>
+        <finalName>online-oj</finalName>
     </build>
 
 </project>

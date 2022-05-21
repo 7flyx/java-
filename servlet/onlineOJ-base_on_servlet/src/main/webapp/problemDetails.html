@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="font/iconfont.css" />
     <link rel="stylesheet" href="font1/iconfont.css" />
     <link rel="stylesheet" href="css/css.css" />
+    <!-- Markdown的依赖，必须是在jQuery之后和acs.js之前进行引入，不然后续无法拿到"editormd"变量 -->
+    <script src="editor.md/lib/marked.min.js"></script>
+    <script src="editor.md/lib/prettify.min.js"></script>
+    <script src="editor.md/editormd.js"></script>
 
     <!-- 引入 ace.js -->
     <script src="https://cdn.bootcdn.net/ajax/libs/ace/1.2.9/ace.js"></script>
@@ -33,8 +37,7 @@
             <div class="icon">
                 <div class="icon-img"><img src="images/eric.png" alt="" /></div>
                 <div class="icon-con">
-                    <p>Good Day</p>
-                    <h2>Vitaliy D.</h2>
+                    <h3>飞人</h3>
                 </div>
             </div>
             <div class="line"></div>
@@ -98,10 +101,11 @@
 
         <!-- 右侧内容展示区域 -->
         <div id="rightSpace">
-            <div id="problemGather">
+            <div id="problemGather1">
                 <div id="title">
                     <!-- <h3>题目</h3> -->
                 </div>
+                <div class="line2"></div>
                  <div class="body" id="body">
                     <!-- <div>题干</div> -->
                 </div> 
@@ -112,8 +116,10 @@
                         <!-- <span class="notpassStatus">Error</span>  -->
                         <!-- <input type="button" value="详情" id="detailsButton" onclick="dianwo()">  -->
                     </div>
-                     
-                    <button id="submit">提交代码</button>
+                    <div >
+                        <button style="background-color: orange;" id="returnCode">还原模板</button>
+                        <button id="submit">提交代码</button>
+                    </div>
                 </div>
                 <div id="editor" style="min-height:631px; min-width: 200px; opacity: 0.7;">
                     <textarea class="form-control" id="codeEditor" style="width: 500px; height: 400px;"></textarea>
@@ -132,11 +138,7 @@
 		    </div>
         </div>
     </div>
-
-
-    <script src="editor.md/lib/marked.min.js"></script>
-    <script src="editor.md/lib/prettify.min.js"></script>
-    <script src="editor.md/editormd.js"></script>
+    
 
     <!-- Ace代码编辑器 -->
     <script>
@@ -193,90 +195,106 @@
             url: "problem" + location.search,
             type: "GET",
             success: function(data, status) {
-                // 题目标题
-                let pageTitle = document.querySelector("#PageTitle"); // 网页上的那个标题
-                pageTitle.innerHTML = data.title;
-                let titlePos = document.querySelector("#title"); 
-                let h3 = document.createElement("h3");
-                h3.innerHTML = data.title;
-                titlePos.appendChild(h3);
-                // 题目题干
-                // let bodyPos = document.querySelector(".body");
-                // let problem = document.createElement("div");
-                // problem.innerHTML = data.description;
-                editormd.markdownToHTML('body', {markdown: data.description}); // 填充内容
-                //bodyPos.appendChild(problem);
-                // 题目初始化代码
-                myEditor.setValue(data.templateCode);
-
-                // 处理提交代码
-                let submitButton = document.querySelector("#submit");
-                submitButton.onclick = function() {
-                    let code = {
-                        id: data.id,
-                        code: myEditor.getValue()
+                if (data == null) {
+                    location.assign("index.html");
+                } else {
+                    // 题目标题
+                    let pageTitle = document.querySelector("#PageTitle"); // 网页上的那个标题
+                    pageTitle.innerHTML = data.title;
+                    let titlePos = document.querySelector("#title"); 
+                    let h3 = document.createElement("h3");
+                    h3.innerHTML = data.title;
+                    titlePos.appendChild(h3);
+                    // 题目题干
+                    editormd.markdownToHTML('body', {markdown: data.description}); // 填充内容
+                    // 题目初始化代码
+                    myEditor.setValue(data.templateCode);
+    
+                    // 处理提交代码
+                    let submitButton = document.querySelector("#submit");
+                    submitButton.onclick = function() {
+                        let code = {
+                            id: data.id,
+                            code: myEditor.getValue()
+                        };
+    
+                        $.ajax({
+                            url: "compile",
+                            type: "POST",
+                            contentType: "application/json;charset=utf8",
+                            data: JSON.stringify(code),
+                            success: function(data, status) {
+                                if(data == null) { // 不能判断status是不是304.只能判data是不是为null
+                                    location.assign("index.html"); // 当前还没登录，重定向到登录页面
+                                } else {
+                                    alert("代码提交成功！")
+                                    let submitedInfo = document.querySelector("#codeSubmitedInfo");
+                                    // 代码执行结果
+                                    if (document.getElementById("resultSpan")) { // 如果存在的情况
+                                        let span = document.querySelector("#resultSpan");
+                                        if (data.error == 0) { // 代码运行成功的情况
+                                            span.className = "passStatus";
+                                            span.innerHTML = "Accept";
+                                        } else { // 代码运行出错的情况
+                                            span.className = "notpassStatus";
+                                            span.innerHTML = "Error";
+                                        }
+                                    } else { // 如果不存在的情况
+                                        let span = document.createElement("span");
+                                        span.id = "resultSpan";
+                                        if (data.error == 0) { // 代码运行成功的情况
+                                            span.className = "passStatus";
+                                            span.innerHTML = "Accept";
+                                        } else { // 代码运行出错的情况
+                                            span.className = "notpassStatus";
+                                            span.innerHTML = "Error";
+                                        }
+                                        submitedInfo.appendChild(span);
+                                    }
+                                    
+                                    // 代码运行详细信息
+                                    if (!document.getElementById("detailsButton")) { // “详情”按钮不存在的情况
+                                        let detailsButton = document.createElement("input");
+                                        detailsButton.type = "button";
+                                        detailsButton.onclick = dianwo;
+                                        detailsButton.id = "detailsButton";
+                                        detailsButton.value = "详情";
+                                        submitedInfo.appendChild(detailsButton);
+                                    }
+    
+                                    if (document.getElementById("details")) { // 如果已经存在代码运行数据，替换即可
+                                        let pre = document.querySelector("#details");
+                                        pre.innerHTML = '';
+                                        pre.innerHTML = data.reason;
+                                    } else { // 不存在代码运行信息，就新建
+                                        let header = document.querySelector("#showResult");
+                                        let div = document.createElement("div");
+                                        let pre = document.createElement("pre");
+                                        pre.innerHTML = '';
+                                        pre.innerHTML = data.reason;
+                                        pre.id = "details";
+                                        div.appendChild(pre);
+                                        header.appendChild(div);
+                                    }
+                                }
+                            }
+                        });
                     };
-
-                    $.ajax({
-                        url: "compile",
-                        type: "POST",
-                        contentType: "application/json;charset=utf8",
-                        data: JSON.stringify(code),
-                        success: function(data, status) {
-                            alert("代码提交成功！")
-                            let submitedInfo = document.querySelector("#codeSubmitedInfo");
-                            // 代码执行结果
-                            if (document.getElementById("resultSpan")) { // 如果存在的情况
-                                let span = document.querySelector("#resultSpan");
-                                if (data.error == 0) { // 代码运行成功的情况
-                                    span.className = "passStatus";
-                                    span.innerHTML = "Accept";
-                                } else { // 代码运行出错的情况
-                                    span.className = "notpassStatus";
-                                    span.innerHTML = "Error";
-                                }
-                            } else { // 如果不存在的情况
-                                let span = document.createElement("span");
-                                span.id = "resultSpan";
-                                if (data.error == 0) { // 代码运行成功的情况
-                                    span.className = "passStatus";
-                                    span.innerHTML = "Accept";
-                                } else { // 代码运行出错的情况
-                                    span.className = "notpassStatus";
-                                    span.innerHTML = "Error";
-                                }
-                                submitedInfo.appendChild(span);
-                            }
-                            
-                            // 代码运行详细信息
-                            if (!document.getElementById("detailsButton")) { // “详情”按钮不存在的情况
-                                let detailsButton = document.createElement("input");
-                                detailsButton.type = "button";
-                                detailsButton.onclick = dianwo;
-                                detailsButton.id = "detailsButton";
-                                detailsButton.value = "详情";
-                                submitedInfo.appendChild(detailsButton);
-                            }
-
-                            if (document.getElementById("details")) { // 如果已经存在代码运行数据，替换即可
-                                let pre = document.querySelector("#details");
-                                pre.innerHTML = '';
-                                pre.innerHTML = data.reason;
-                            } else { // 不存在代码运行信息，就新建
-                                let header = document.querySelector("#showResult");
-                                let div = document.createElement("div");
-                                let pre = document.createElement("pre");
-                                pre.innerHTML = '';
-                                pre.innerHTML = data.reason;
-                                pre.id = "details";
-                                div.appendChild(pre);
-                                header.appendChild(div);
-                            }
-                        }
-                    });
-                };
+                }
             }
         });
+    
+        let returnCodeBtn = document.querySelector("#returnCode");
+        returnCodeBtn.onclick = function() {
+            $.ajax({
+                url: "problem" + location.search + "&returnCode=true",
+                type: "GET",
+                success: function(data, status) {
+                     myEditor.setValue(data.templateCode);
+                }
+            });
+        }
+        
     </script>
 </body>
 </html>

@@ -1,8 +1,10 @@
 package api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import common.Util;
 import dao.Problem;
 import dao.ProblemDAO;
+import dao.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,6 +27,11 @@ public class AddProblemServlet extends HttpServlet {
         req.setCharacterEncoding("utf8");
         resp.setCharacterEncoding("utf8");
         resp.setContentType("text/html;charset=utf8");
+        User user = Util.checkLogin(req);
+        if (user == null) {
+            resp.setStatus(304); // 重定向到登录页面
+            return;
+        }
         ObjectMapper objectMapper = new ObjectMapper();
         Problem problem = objectMapper.readValue(req.getInputStream(), Problem.class);
 //        System.out.println(problem.getClassify());

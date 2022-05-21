@@ -1,8 +1,10 @@
 package api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import common.Util;
 import dao.ListDAO;
 import dao.ListDAO.ListName;
+import dao.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,6 +29,11 @@ public class GetListNameServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding("utf8");
         resp.setContentType("application/json;charset=utf8");
+        User user = Util.checkLogin(req);
+        if (user == null) {
+            resp.setStatus(304);; // 重定向到登录页面
+            return;
+        }
         ObjectMapper objectMapper = new ObjectMapper();
         List<ListName> listAll = ListDAO.getListAll();
         String ans = objectMapper.writeValueAsString(listAll);

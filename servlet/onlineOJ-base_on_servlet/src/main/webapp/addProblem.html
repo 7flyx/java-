@@ -137,6 +137,7 @@
                     <textarea name="testCode" id="testCode" cols="30" rows="10" placeholder="对数器代码，请不要带package字眼"></textarea>
                </div>
                <div class="submitBottomBar">
+                   <span  id="content" style="display: none;"></span>
                    <input type="button" value="提交" id="submitProblemModule">
                </div>
            </div>
@@ -223,7 +224,11 @@
                     location.assign("problem.html"); // 重定向到题库页面
                 },
                 error: function(data, status){
-                    alert("新增失败");
+                    if (data == null) {
+                        location.assign("index.html");
+                    } else {
+                        alert("新增失败");
+                    }
                 }
             });
         };
