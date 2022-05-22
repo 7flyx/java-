@@ -30,14 +30,12 @@ public class CheckListNameServlet extends HttpServlet {
             return;
         }
         String listName = req.getParameter("listName");
-        System.out.println("listname " + listName);
         if (listName == null || listName.equals("")) {
             resp.setStatus(403);
             resp.getWriter().write("合集不存在");
             return;
         }
         int classifyNumber = ListDAO.checkList(listName);
-        System.out.println(classifyNumber);
         if (classifyNumber != -1) {
             resp.setStatus(200);
             resp.getWriter().write(classifyNumber +"");

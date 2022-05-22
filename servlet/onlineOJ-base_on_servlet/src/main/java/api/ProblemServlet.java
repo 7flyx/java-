@@ -56,6 +56,6 @@ public class ProblemServlet extends HttpServlet {
             String s = objectMapper.writeValueAsString(problems);
             resp.getWriter().write(s);
         }
-        System.out.println(listID);
+//        System.out.println(listID);
     }
 }

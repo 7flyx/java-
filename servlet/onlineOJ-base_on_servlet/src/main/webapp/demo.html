@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="row" ng-app="ionicApp" id="spinnerDiv">
+        <div class="col-lg-6 col-lg-offset-3">
+            <p style="width:15%; margin: auto ;padding-top:10px"><!--居中显示-->
+                <ion-spinner icon="bubbles" style="width:10%;stroke:#33cd5f;fill:#33cd5f;"></ion-spinner><!--bubbles加载动画的样式-->
+            </p>
+        </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+
+    <script src="//cdn.bootcss.com/ionic/1.3.2/js/ionic.bundle.min.js"></script>
+    <script>
+        angular.module('ionicApp', ['ionic'])
+    </script>
+</body>
+</html>

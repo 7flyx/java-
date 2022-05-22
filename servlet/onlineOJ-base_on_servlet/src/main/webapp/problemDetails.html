@@ -114,11 +114,11 @@
                 <div id="topbar">
                     <div id="codeSubmitedInfo">代码运行状况：
                         <!-- <span class="notpassStatus">Error</span>  -->
-                        <!-- <input type="button" value="详情" id="detailsButton" onclick="dianwo()">  -->
+                        <input type="button" value="详情" id="detailsButton" onclick="dianwo()"> 
                     </div>
                     <div >
-                        <button style="background-color: orange;" id="returnCode">还原模板</button>
-                        <button id="submit">提交代码</button>
+                        <button id="returnCode">还原模板</button>
+                        <button id="submit" class="submitCode">提交代码</button>
                     </div>
                 </div>
                 <div id="editor" style="min-height:631px; min-width: 200px; opacity: 0.7;">
@@ -217,68 +217,71 @@
                             id: data.id,
                             code: myEditor.getValue()
                         };
-    
-                        $.ajax({
-                            url: "compile",
-                            type: "POST",
-                            contentType: "application/json;charset=utf8",
-                            data: JSON.stringify(code),
-                            success: function(data, status) {
-                                if(data == null) { // 不能判断status是不是304.只能判data是不是为null
-                                    location.assign("index.html"); // 当前还没登录，重定向到登录页面
-                                } else {
-                                    alert("代码提交成功！")
-                                    let submitedInfo = document.querySelector("#codeSubmitedInfo");
-                                    // 代码执行结果
-                                    if (document.getElementById("resultSpan")) { // 如果存在的情况
-                                        let span = document.querySelector("#resultSpan");
-                                        if (data.error == 0) { // 代码运行成功的情况
-                                            span.className = "passStatus";
-                                            span.innerHTML = "Accept";
-                                        } else { // 代码运行出错的情况
-                                            span.className = "notpassStatus";
-                                            span.innerHTML = "Error";
+                        let btn = confirm("是否提交代码？");
+                        btn.onclick = function() {
+                                $.ajax({
+                                url: "compile",
+                                type: "POST",
+                                contentType: "application/json;charset=utf8",
+                                data: JSON.stringify(code),
+                                success: function(data, status) {
+                                    if(data == null) { // 不能判断status是不是304.只能判data是不是为null
+                                        location.assign("index.html"); // 当前还没登录，重定向到登录页面
+                                    } else {
+                                        alert("代码运行成功！")
+                                        let submitedInfo = document.querySelector("#codeSubmitedInfo");
+                                        // 代码执行结果
+                                        if (document.getElementById("resultSpan")) { // 如果存在的情况
+                                            let span = document.querySelector("#resultSpan");
+                                            if (data.error == 0) { // 代码运行成功的情况
+                                                span.className = "passStatus";
+                                                span.innerHTML = "Accept"; 
+                                            } else { // 代码运行出错的情况
+                                                span.className = "notpassStatus";
+                                                span.innerHTML = "Error";
+                                            }
+                                        } else { // 如果不存在的情况
+                                            let span = document.createElement("span");
+                                            span.id = "resultSpan";
+                                            if (data.error == 0) { // 代码运行成功的情况
+                                                span.className = "passStatus";
+                                                span.innerHTML = "Accept";
+                                            } else { // 代码运行出错的情况
+                                                span.className = "notpassStatus";
+                                                span.innerHTML = "Error";
+                                            }
+                                            submitedInfo.appendChild(span);
                                         }
-                                    } else { // 如果不存在的情况
-                                        let span = document.createElement("span");
-                                        span.id = "resultSpan";
-                                        if (data.error == 0) { // 代码运行成功的情况
-                                            span.className = "passStatus";
-                                            span.innerHTML = "Accept";
-                                        } else { // 代码运行出错的情况
-                                            span.className = "notpassStatus";
-                                            span.innerHTML = "Error";
+                                        
+                                        // 代码运行详细信息
+                                        if (!document.getElementById("detailsButton")) { // “详情”按钮不存在的情况
+                                            let detailsButton = document.createElement("input");
+                                            detailsButton.type = "button";
+                                            detailsButton.onclick = dianwo;
+                                            detailsButton.id = "detailsButton";
+                                            detailsButton.value = "详情";
+                                            submitedInfo.appendChild(detailsButton);
                                         }
-                                        submitedInfo.appendChild(span);
-                                    }
-                                    
-                                    // 代码运行详细信息
-                                    if (!document.getElementById("detailsButton")) { // “详情”按钮不存在的情况
-                                        let detailsButton = document.createElement("input");
-                                        detailsButton.type = "button";
-                                        detailsButton.onclick = dianwo;
-                                        detailsButton.id = "detailsButton";
-                                        detailsButton.value = "详情";
-                                        submitedInfo.appendChild(detailsButton);
-                                    }
-    
-                                    if (document.getElementById("details")) { // 如果已经存在代码运行数据，替换即可
-                                        let pre = document.querySelector("#details");
-                                        pre.innerHTML = '';
-                                        pre.innerHTML = data.reason;
-                                    } else { // 不存在代码运行信息，就新建
-                                        let header = document.querySelector("#showResult");
-                                        let div = document.createElement("div");
-                                        let pre = document.createElement("pre");
-                                        pre.innerHTML = '';
-                                        pre.innerHTML = data.reason;
-                                        pre.id = "details";
-                                        div.appendChild(pre);
-                                        header.appendChild(div);
+        
+                                        if (document.getElementById("details")) { // 如果已经存在代码运行数据，替换即可
+                                            let pre = document.querySelector("#details");
+                                            pre.innerHTML = '';
+                                            pre.innerHTML = data.reason;
+                                        } else { // 不存在代码运行信息，就新建
+                                            let header = document.querySelector("#showResult");
+                                            let div = document.createElement("div");
+                                            let pre = document.createElement("pre");
+                                            pre.innerHTML = '';
+                                            pre.innerHTML = data.reason;
+                                            pre.id = "details";
+                                            div.appendChild(pre);
+                                            header.appendChild(div);
+                                        }
                                     }
                                 }
-                            }
-                        });
+                            });
+                        }
+                       
                     };
                 }
             }

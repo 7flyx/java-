@@ -42,7 +42,6 @@ public class LoginServlet extends HttpServlet {
         User user = userDAO.getUser(username);
         if (user == null || !password.equals(user.getPassword())) {
             resp.setStatus(403);
-//            System.out.println("账号或密码错误");
             return;
         }
         HttpSession session = req.getSession(true);

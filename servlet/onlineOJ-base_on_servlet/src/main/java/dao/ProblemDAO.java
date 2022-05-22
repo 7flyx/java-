@@ -57,11 +57,11 @@ public class ProblemDAO {
             statement = connection.prepareStatement(sql);
             statement.setInt(1, problemID);
             int ret = statement.executeUpdate();
-            if (ret != 0) {
-                System.out.println("题目删除成功");
-            } else {
-                System.out.println("题目删除失败");
-            }
+//            if (ret != 0) {
+//                System.out.println("题目删除成功");
+//            } else {
+//                System.out.println("题目删除失败");
+//            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {

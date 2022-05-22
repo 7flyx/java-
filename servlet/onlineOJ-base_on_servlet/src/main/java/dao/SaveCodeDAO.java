@@ -29,11 +29,11 @@ public class SaveCodeDAO {
             statement.setString(2, code);
             statement.setInt(3, userID);
             int ret = statement.executeUpdate();
-            if (ret != 0) {
-                System.out.println("代码备份成功");
-            } else {
-                System.out.println("代码备份失败");
-            }
+//            if (ret != 0) {
+//                System.out.println("代码备份成功");
+//            } else {
+//                System.out.println("代码备份失败");
+//            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
@@ -75,11 +75,11 @@ public class SaveCodeDAO {
             statement.setInt(1, problemID);
             statement.setInt(2, userID);
             int ret = statement.executeUpdate();
-            if (ret != 0) {
-                System.out.println("代码删除成功");
-            } else {
-                System.out.println("代码删除失败");
-            }
+//            if (ret != 0) {
+//                System.out.println("代码删除成功");
+//            } else {
+//                System.out.println("代码删除失败");
+//            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {

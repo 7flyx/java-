@@ -209,8 +209,12 @@
             url: "getListName",
             type:"GET",
             success: function(data, status) {
-                markTopicSumList(data);
-            }
+                if(data == null) { // 不能判断status是不是304.只能判data是不是为null
+                    location.assign("index.html"); // 当前还没登录，重定向到登录页面
+                } else {
+                    markTopicSumList(data);
+                }
+            }, 
         });
 
 
@@ -270,6 +274,13 @@
                             tdTitle.appendChild(a);
                             // 难度
                             tdLevel.innerHTML = problem.level;
+                            if (problem.level == "简单") {
+                                tdLevel.className = "easyLevel";
+                            } else if (problem.level == "中等") {
+                                tdLevel.className = "midLevel";
+                            } else if (problem.level == "困难") {
+                                tdLevel.className = "hardLevel";
+                            }
                             tr.appendChild(tdState);
                             tr.appendChild(tdTitle);
                             tr.appendChild(tdLevel);
@@ -309,8 +320,6 @@
             document.getElementById('addList').style.display="none";
         }
     </script>
-    
-    <!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> -->
     
 </body>
 </html>

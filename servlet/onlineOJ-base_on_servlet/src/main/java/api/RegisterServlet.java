@@ -37,7 +37,6 @@ public class RegisterServlet extends HttpServlet {
         if (user != null) { // 用户已经存在的情况下，直接返回
             resp.setStatus(403);
             resp.getWriter().write("用户名已存在");
-//            System.out.println("用户已经存在");
             return;
         }
         userDAO.addUser(myUser.username, myUser.password, false); // 在数据库注册一个新用户

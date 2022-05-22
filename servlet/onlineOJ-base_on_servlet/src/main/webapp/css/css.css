@@ -362,7 +362,7 @@ tbody a {
 }
 
 /* 提交按钮 */
-#topbar button {
+.submitCode {
     width: 100px;
     height: 30px;
     color: #fff;
@@ -447,7 +447,7 @@ tbody a {
 
 
 /* 监听事件 */
-#topbar button:active {
+.submitCode:active {
     background-color:rgb(106, 182, 237); ;
 }
 
@@ -685,4 +685,26 @@ tbody a {
 .hardLevel {
     color: red;
     background-color: rgba(245, 229, 128, 0);
+}
+
+#returnCode {
+    width: 100px;
+    height: 30px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    margin-right: 20px;
+    background-color: rgb(247, 189, 0);
+}
+
+#returnCode:active {
+    background-color: rgb(243, 218, 136);
+}
+
+#showResult {
+    height: calc(100% - 40px);
+    overflow: scroll;
 }

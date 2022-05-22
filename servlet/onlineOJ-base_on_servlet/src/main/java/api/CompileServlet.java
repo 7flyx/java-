@@ -85,7 +85,6 @@ public class CompileServlet extends HttpServlet {
         }
 //        3、 拼接测试方法和用户提交的代码
         String finalCode = packageData + packageData2 + userCode + testCode;
-        System.out.println(finalCode);
         // 4、跑测试方法。得到运行结果
         Question question = new Question();
         question.setCode(finalCode);
@@ -95,12 +94,13 @@ public class CompileServlet extends HttpServlet {
         compileResponse.error = answer.getError();
         compileResponse.reason = answer.getReason();
         compileResponse.stdout = answer.getStdout();
-        System.out.println(compileResponse.reason + " " + compileResponse.stdout);
         String s = objectMapper.writeValueAsString(compileResponse);
         resp.getWriter().write(s);
 
         //6. 假设代码运行成功，需要将用户代码保存到数据库
-        SaveCodeDAO.saveCodeToDB(compileRequest.id, compileRequest.code, user.getUserID());
+        if (answer.getError() == 0) {
+            SaveCodeDAO.saveCodeToDB(compileRequest.id, compileRequest.code, user.getUserID());
+        }
     }
 
     private String readBody(HttpServletRequest req) throws UnsupportedEncodingException {
