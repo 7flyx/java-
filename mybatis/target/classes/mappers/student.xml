@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace 命令空间，后续可以根据这个命名空间来访问他所包含的 代码-->
+<mapper namespace="student">
+<!--    resultType是返回的结果表示 是以 Student类的形式进行存储-->
+<!--    <select id="list" resultType="students.Student">-->
+<!--        select * from student-->
+<!--    </select>-->
+
+<!--  字段映射：如果Student类里面的属性名 和 数据库表的字段名不一样，可以通过这样进行映射  -->
+    <resultMap id="rmList" type="students.Student">
+        <result property="name" column="name"/>
+        <result property="id" column="id"/>
+    </resultMap>
+
+    <select id="list" resultMap="rmList">
+        SELECT * FROM student
+    </select>
+
+    <select id="get" resultType="students.Student">
+        SELECT * FROM student WHERE name = #{name}
+    </select>
+
+    <select id="get2" resultType="students.Student">
+        SELECT * FROM student WHERE name = #{name} OR id = #{id}
+    </select>
+
+<!--    <resultMap id="rmStudent3" type="students.Student">-->
+<!--        <result property="manager.managerID" column="m_managerID"/>-->
+<!--        <result property="manager.managerName" column="m_managerName"/>-->
+<!--    </resultMap>-->
+
+<!--    <select id="get3" resultMap="rmStudent3">-->
+<!--        SELECT s.id, s.name, m.managerID m_managerID, m.managerName m_managerName-->
+<!--        FROM student s-->
+<!--        JOIN manager m-->
+<!--        ON s.managerID = m.managerID;-->
+<!--    </select>-->
+
+
+    <select id="get3" resultType="students.Student">
+<!--        将这个查询的结果中的某一列的数据，重命名临时表的字段名，比如 manager.managerID，
+                    然后这个字段名对应着Student类里面的属性-->
+        SELECT
+            s.*, m.managerID `manager.managerID`,
+                m.managerName `manager.managerName`
+        FROM student s
+        JOIN manager m
+        ON s.managerID = m.managerID;
+    </select>
+
+    <select id="get4" resultType="java.util.LinkedHashMap">
+        <!--        将这个查询的结果中的某一列的数据，重命名临时表的字段名，比如 manager.managerID，
+                            然后这个字段名对应着Student类里面的属性-->
+        SELECT
+        s.*, m.managerID `manager.managerID`,
+        m.managerName `manager.managerName`
+        FROM student s
+        JOIN manager m
+        ON s.managerID = m.managerID;
+    </select>
+</mapper>
