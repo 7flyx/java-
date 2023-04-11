@@ -5,21 +5,28 @@
 <configuration>
 <!-- mybatis-config.xmd 称为mybatis的核心配置文件-->
 
+    <properties resource="mybatis.properties"/>
+
     <settings>
 <!--        开启驼峰命名自动映射，比如从数据库的字段名：my_age 映射都到 Java类的属性名：myAge-->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
-    
+
+    <typeAliases>
+<!--        起别名：这里是不区分大小写的，-->
+        <typeAlias type="students.Student" alias="student"/>
+    </typeAliases>
+
 <!--    工作环境-->
     <environments default="development">
 <!--        开发环境（调试环境）-->
         <environment id="development">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://localhost:3306/test"/>
-                <property name="username" value="root"/>
-                <property name="password" value="2001"/>
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
             </dataSource>
         </environment>
 

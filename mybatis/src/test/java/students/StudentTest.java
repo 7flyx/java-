@@ -3,8 +3,8 @@ package students;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,8 +42,8 @@ public class StudentTest {
 //        第一种：传入多个参数的查询方法
         try (SqlSession session = DBUtil.openSession()) {
             Map<String, String> map = new HashMap<>();
-            map.put("id","2");
-            map.put("name","彭于晏");
+            map.put("id", "2");
+            map.put("name", "彭于晏");
             List<Student> student = session.selectList("student.get2", map);
             for (Student student1 : student) {
                 System.out.println(student1);
@@ -80,10 +80,79 @@ public class StudentTest {
     public void select6() {
         // 多表查询
         try (SqlSession session = DBUtil.openSession()) {
-            List<LinkedHashMap> students = session.selectList("student.get4");
-            for (LinkedHashMap student : students) {
+            List<Map> students = session.selectList("student.get5");
+            for (Map student : students) {
                 System.out.println(student);
             }
         }
     }
+
+    @Test
+    public void insert() {
+        try (SqlSession session = DBUtil.openSession(true)) {
+            Student student = new Student();
+            student.setId(5);
+            student.setName("张飞");
+            student.setManager(new Manager(2, "刘备"));
+            session.insert("student.insert", student);
+        }
+    }
+
+    @Test
+    public void insertList() {
+        try (SqlSession session = DBUtil.openSession(true)) {
+            Student stu1 = new Student(6, "小张", new Manager(2, "小张"));
+            Student stu2 = new Student(7, "小刘", new Manager(2, "小张"));
+            List<Student> list = new ArrayList<>();
+            list.add(stu1);
+            list.add(stu2);
+            session.insert("student.insertList", list);
+        }
+    }
+
+    @Test
+    public void update() {
+        try (SqlSession session = DBUtil.openSession(true)) {
+            Student stu = new Student();
+            stu.setId(1);
+            stu.setName("pengyuyan");
+            session.update("student.update", stu);
+        }
+    }
+
+    @Test
+    public void delete() {
+        try (SqlSession session = DBUtil.openSession(true)) {
+            session.delete("student.delete", 1);
+        }
+    }
+
+    @Test
+    public void deleteList() {
+        try (SqlSession session = DBUtil.openSession()) {
+            List<Integer> list = new ArrayList<>();
+            list.add(2);
+            list.add(3);
+            list.add(4);
+            session.delete("student.deleteList", list);
+            session.commit(); // 提交事务
+        }
+    }
+
+    @Test
+    public void dynamicSQL() {
+        try (SqlSession session = DBUtil.openSession()) {
+            /*
+                select * from student where id < 7 or name like '%刘%'
+             */
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", 7);
+            map.put("name", "%刘%");
+            List<Student> objects = session.selectList("student.dynamicSQL1", map);
+            for (Student stu : objects) {
+                System.out.println(stu);
+            }
+        }
+    }
+
 }

@@ -12,6 +12,16 @@ public class Student {
     public String name;
     public Manager manager; // 他的经理
 
+    public Student() {
+
+    }
+
+    public Student(int id, String name, Manager manager) {
+        this.id = id;
+        this.name = name;
+        this.manager = manager;
+    }
+
     public Manager getManager() {
         return manager;
     }

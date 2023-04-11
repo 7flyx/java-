@@ -29,7 +29,14 @@ public class DBUtil {
         }
     }
 
-    public static SqlSession openSession() { // 返回一个session 会话值，上层调用自己进行session资源的回收
+    // 返回一个session 会话值，上层调用自己进行session资源的回收。默认是关闭了 自动提交事务
+    public static SqlSession openSession() {
         return factory.openSession();
     }
+
+    public static SqlSession openSession(boolean autoMatic) {
+        // true表示 自动提交事务commit。false表示 关闭自动提交事务，就需要自己手动提交事务
+        return factory.openSession(autoMatic);
+    }
+
 }
