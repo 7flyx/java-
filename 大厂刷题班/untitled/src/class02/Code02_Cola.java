@@ -11,5 +11,5 @@ package class02;
  * 需要购买的可乐数量是m，其中手头拥有的10、50、100的数量分别为a、b、c，可乐的价格是x(x是10的倍数)
  * 请计算出需要投入硬币次数
  */
-public class Code02_Sola {
+public class Code02_Cola {
 }
