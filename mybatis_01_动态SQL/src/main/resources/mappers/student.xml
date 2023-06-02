@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace 命令空间，后续可以根据这个命名空间来访问他所包含的 代码-->
+<mapper namespace="student">
+<!--    resultType是返回的结果表示 是以 Student类的形式进行存储-->
+<!--    <select id="list" resultType="students.Student">-->
+<!--        select * from student-->
+<!--    </select>-->
+
+<!--  字段映射：如果Student类里面的属性名 和 数据库表的字段名不一样，可以通过这样进行映射  -->
+    <resultMap id="rmList" type="students.Student">
+        <result property="name" column="name"/>
+        <result property="id" column="id"/>
+    </resultMap>
+
+    <select id="list" resultMap="rmList">
+        SELECT * FROM student
+    </select>
+
+    <select id="get" resultType="students.Student">
+        SELECT * FROM student WHERE name = #{name}
+    </select>
+
+    <select id="get2" resultType="students.Student">
+        SELECT * FROM student WHERE name = #{name} OR id = #{id}
+    </select>
+
+    <resultMap id="rmStudent3" type="students.Student">
+        <result property="manager.managerID" column="m_managerID"/>
+        <result property="manager.managerName" column="m_managerName"/>
+    </resultMap>
+
+    <select id="get3" resultMap="rmStudent3">
+        SELECT
+            s.id, s.name, m.managerID m_managerID, m.managerName m_managerName
+        FROM student s
+        JOIN manager m
+        ON s.managerID = m.managerID;
+    </select>
+
+    <select id="get4" resultType="students.Student">
+<!--        将这个查询的结果中的某一列的数据，重命名临时表的字段名，比如 manager.managerID，
+                    然后这个字段名对应着Student类里面的属性-->
+        SELECT
+            s.*, m.managerID `manager.managerID`,
+                m.managerName `manager.managerName`
+        FROM student s
+        JOIN manager m
+        ON s.managerID = m.managerID;
+    </select>
+
+<!--    resultType 也可以是HashMap之类的结构-->
+    <select id="get5" resultType="java.util.Map">
+        <!--        将这个查询的结果中的某一列的数据，重命名临时表的字段名，比如 manager.managerID，
+                            然后这个字段名对应着Student类里面的属性-->
+        SELECT
+            s.*, m.managerID `manager.managerID`,
+            m.managerName `manager.managerName`
+        FROM student s
+        JOIN manager m
+        ON s.managerID = m.managerID;
+    </select>
+
+    <insert id="insert" parameterType="students.Student">
+<!--        如果Student里面有个参数是引用类型，这里在使用的时候，还是需要像正常调用参数一样：manger.managerID-->
+        INSERT INTO student VALUES (#{id}, #{name}, #{manager.managerID});
+    </insert>
+
+<!--    批量插入-->
+    <insert id="insertList" parameterType="java.util.List">
+        INSERT INTO student VALUES
+        <foreach collection="list" item="stu" separator=",">
+            (#{stu.id},#{stu.name},#{stu.manager.managerID})
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="students.Student">
+        UPDATE student SET name = #{name} WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM student WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteList" parameterType="List">
+        DELETE FROM student WHERE id in
+        <foreach collection="list" item="id" separator=","
+                 open="(" close=")" >
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="dynamicSQL1" parameterType="Map" resultType="students.Student">
+        SELECT id,name, managerID `manager.managerID` FROM student
+        <where>
+            <if test="id != null">
+                id &lt; #{id}
+            </if>
+            <if test="name != null">
+                OR name like #{name}
+            </if>
+        </where>
+    </select>
+
+<!--    新建一条记录，数据库会自动生成主键，然后mybatis获取主键-->
+    <insert id="insertAndGetPrimaryKey" parameterType="students.Student"
+            useGeneratedKeys="true" keyProperty="id">
+<!--        实现获取主键的两种方式： -->
+<!--           1、这里的 useGeneratedKeys=true表示强制 获取主键，将主键存入 keyProperty中，
+                当然，这个使用方式是需要数据库底层有驱动实现的，比如MySQL中就有实现.-->
+        INSERT INTO student .....
+<!--        2、或者是使用如下标签，就不需要数据库驱动，而是直接从数据库查询一次SQL得到的-->
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <!--        分页查询-->
+    <select id="pageSelect" parameterType="students.Student" resultType="students.Student">
+<!--        不同的数据库，比如MySQL、SQL server，分页查询的SQL语句有所差别，所以需要mybatis + 第三方插件搭配使用，
+                才能使同一份代码，在不同的环境运行-->
+<!--        这里使用 pageHelper插件，然后这里直接使用查询语句即可，无需搭配 limit子句。插件会自动实现-->
+        SELECT * from student
+    </select>
+</mapper>
