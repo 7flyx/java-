@@ -1,4 +1,4 @@
-package com.mj.bean;
+package bean;
 
 import java.util.List;
 
@@ -47,5 +47,9 @@ public class Person {
 
     public void setJobs(List<Job> jobs) {
         this.jobs = jobs;
+    }
+
+    public String toString() {
+        return id + " " + name;
     }
 }

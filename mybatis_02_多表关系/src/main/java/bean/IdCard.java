@@ -1,4 +1,4 @@
-package com.mj.bean;
+package bean;
 
 public class IdCard {
     private Integer id;

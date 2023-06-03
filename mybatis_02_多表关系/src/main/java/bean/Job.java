@@ -1,4 +1,4 @@
-package com.mj.bean;
+package bean;
 
 import java.util.List;
 
