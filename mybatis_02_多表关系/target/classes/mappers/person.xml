@@ -16,4 +16,67 @@
     <select id="getOne" resultMap="rmOne">
         <include refid="selectSql"/>
     </select>
+
+    <resultMap id="rmPerson1" type="bean.Person">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+
+<!--        collection 就是1对多的查询情况，比如一个人有多张银行卡，在Person对象里面有一个List表需要填写，此时就用collection标签-->
+<!--        ofType 指定了List表里面的类型。property指的是 List表的名字（引用）-->
+        <collection property="bankCards" ofType="bean.BankCard">
+            <result property="id" column="bankCards_id"/>
+            <result property="no" column="bankCards_no"/>
+            <result property="amout" column="bankCards_amout"/>
+        </collection>
+    </resultMap>
+
+    <select id="getPerson1" resultMap="rmPerson1" resultType="bean.Person">
+        SELECT
+            p.id,
+            p.`name`,
+            bc.id `bankCards_id`,
+            bc.no `bankCards_no`,
+            bc.amout `bankCards_amout`
+        FROM person p, bank_card bc
+        WHERE p.id = bc.person_id
+    </select>
+
+    <resultMap id="rmPerson2" type="bean.Person">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <association property="idCard" javaType="bean.IdCard">
+            <id property="id" column="ic_id"/>
+            <result property="no" column="ic_no"/>
+            <result property="address" column="ic_address"/>
+        </association>
+        <collection property="bankCards" ofType="bean.BankCard">
+            <id property="id" column="bankCards_id"/>
+            <result property="no" column="bankCards_no"/>
+            <result property="amout" column="bankCards_amout"/>
+        </collection>
+        <collection property="jobs" ofType="bean.Job">
+            <id property="id" column="job_id"/>
+            <result property="name" column="job_name"/>
+            <result property="duty" column="job_duty"/>
+        </collection>
+    </resultMap>
+
+    <select id="getPerson2" resultType="bean.Person" resultMap="rmPerson2">
+        SELECT
+            p.*,
+            ic.id `ic_id`,
+            ic.`no` `ic_no`,
+            ic.address `ic_address`,
+            bc.id `bankCards_id`,
+            bc.`no` `bankCards_no`,
+            bc.amout `bankCards_amout`,
+            j.id `job_id`,
+            j.`name` `job_name`,
+            j.duty `job_duty`
+        FROM person p
+        JOIN id_card ic ON p.id = ic.person_id
+        LEFT JOIN bank_card bc ON p.id = bc.person_id
+        LEFT JOIN person_job pj ON p.id = pj.person_id
+        LEFT JOIN job j ON pj.job_id = j.id
+    </select>
 </mapper>
